@@ -1,6 +1,6 @@
 # nuxt-music
 
-> My dazzling Nuxt.js project
+> Music DSL
 
 ## Build Setup
 
