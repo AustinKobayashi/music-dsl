@@ -20,7 +20,7 @@ const parser = {
       '  <part id="P1">\n' +
       '    <measure number="1">\n' +
       '      <attributes>\n' +
-      '        <divisions>1</divisions>\n' +
+      '        <divisions>4</divisions>\n' +
       '        <key>\n' +
       '          <fifths>0</fifths>\n' +
       '        </key>\n' +
@@ -36,10 +36,10 @@ const parser = {
       '      <note>\n' +
       '        <pitch>\n' +
       '          <step>C</step>\n' +
-      '          <octave>4</octave>\n' +
+      '          <octave>3</octave>\n' +
       '        </pitch>\n' +
       '        <duration>4</duration>\n' +
-      '        <type>whole</type>\n' +
+      '        <type>quarter</type>\n' +
       '      </note>\n' +
       '    </measure>\n' +
       '  </part>\n' +

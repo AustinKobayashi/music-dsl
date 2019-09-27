@@ -10,7 +10,7 @@
 <script>
 /* eslint-disable no-undef */
 import '../static/opensheetmusicdisplay.min'
-import parser from '../plugins/parser'
+import parser from '../plugins/parser.ts'
 
 export default {
   data() {
