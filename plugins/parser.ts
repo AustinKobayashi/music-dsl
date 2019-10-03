@@ -1,10 +1,17 @@
+import Line from "../ast/line";
+
 const parser = {
 
   // !!!!!!!!!!!!!!!!!!!!!!!!
   // parse method stub
   // !!!!!!!!!!!!!!!!!!!!!!!!
-  parse(user_input) {
-
+  parse(user_input: string) {
+    let lines: string[] = user_input.split("\n");
+    
+    for (let l of lines) {
+      let line = new Line(l);
+      line.parse();
+    }
     // This just returns a basic version of the xml
     // TODO: add parsing functionality
     return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
