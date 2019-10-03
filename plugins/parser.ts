@@ -1,4 +1,4 @@
-import Line from "../ast/line";
+import Statement from "../ast/statement";
 
 const parser = {
 
@@ -6,11 +6,14 @@ const parser = {
   // parse method stub
   // !!!!!!!!!!!!!!!!!!!!!!!!
   parse(user_input: string) {
-    let lines: string[] = user_input.split("\n");
-    
-    for (let l of lines) {
-      let line = new Line(l);
-      line.parse();
+    if (user_input.length > 0) {
+      let statements: string[] = user_input.split("\n");
+
+      for (let s of statements) {
+        // Try catch for error handling
+        let statement = Statement.getStatement(s);
+        statement.parse();
+      }
     }
     // This just returns a basic version of the xml
     // TODO: add parsing functionality
