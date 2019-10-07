@@ -1,4 +1,6 @@
 import Statement from "../ast/statement";
+import title from "~/ast/title";
+import tokenizer from './tokenizer';
 
 const parser = {
 
@@ -6,17 +8,14 @@ const parser = {
   // parse method stub
   // !!!!!!!!!!!!!!!!!!!!!!!!
   parse(user_input: string) {
-    if (user_input.length > 0) {
-      let statements: string[] = user_input.split("\n");
+    try {
+      let tokens = tokenizer.tokenize(user_input);
+      console.log(tokens);
 
-      for (let s of statements) {
-        // Try catch for error handling
-        let statement = Statement.getStatement(s);
-        statement.parse();
-      }
+      // TODO do stuff with tokens
+    } catch (e) {
     }
-    // This just returns a basic version of the xml
-    // TODO: add parsing functionality
+
     return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
       '<!DOCTYPE score-partwise PUBLIC\n' +
       '    "-//Recordare//DTD MusicXML 3.1 Partwise//EN"\n' +
