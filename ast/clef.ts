@@ -1,11 +1,12 @@
-enum supportedClefs {
+enum SupportedClefs {
   Treble = "Treble",
   Bass = "Bass",
+  Alto = "Alto"
 }
 
 export default class Clef implements ASTNode {
   statement: string;
-  clef: supportedClefs;
+  clef: SupportedClefs;
   operator: string = "CLEF";
 
   constructor(statement: string) {
@@ -14,10 +15,12 @@ export default class Clef implements ASTNode {
 
   parse() {
     let userDefinedClef = this.statement.replace(this.operator, "").trim();
-    if (userDefinedClef === supportedClefs.Bass) {
-      this.clef = supportedClefs.Bass;
-    } else if (userDefinedClef === supportedClefs.Treble) {
-      this.clef = supportedClefs.Treble;
+    if (userDefinedClef === SupportedClefs.Bass) {
+      this.clef = SupportedClefs.Bass;
+    } else if (userDefinedClef === SupportedClefs.Treble) {
+      this.clef = SupportedClefs.Treble;
+    } else if (userDefinedClef === SupportedClefs.Alto) {
+      this.clef = SupportedClefs.Alto;
     } else {
       throw new Error(`${userDefinedClef} is not a supported Clef.`);
     }

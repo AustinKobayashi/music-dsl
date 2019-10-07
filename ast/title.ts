@@ -1,3 +1,5 @@
+import SpecialCharacterService from "~/services/special-char.service";
+
 export default class Title implements ASTNode {
   statement: string;
   title: string;
@@ -9,6 +11,9 @@ export default class Title implements ASTNode {
 
   parse() {
     this.title = this.statement.replace(this.operator, "").trim();
+    if (SpecialCharacterService.containsSpecialCharacters(this.title)) {
+      throw new Error("Special characters not allowed in title");
+    }
     console.log("TITLE title: " + this.title);
   }
 
