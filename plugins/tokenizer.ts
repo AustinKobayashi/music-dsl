@@ -49,7 +49,10 @@ const tokenizer = {
                         let note_parts = chord_part.replace(' ', '').split('');
                         note['pitch'] = note_parts[0];
                         note['octave'] = note_parts[1];
-                        note['modifier'] = note_parts.length === 3 ? note_parts[2] : ''
+
+                        if (note_parts.length === 3)
+                            note['modifier'] = note_parts[2];
+
                         chord['notes'].push(note);
                     } else if (durations.includes(chord_part)) {
                         chord['duration'] = chord_part;
