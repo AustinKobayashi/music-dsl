@@ -1,10 +1,20 @@
+import Statement from "../ast/statement";
+
 const parser = {
 
   // !!!!!!!!!!!!!!!!!!!!!!!!
   // parse method stub
   // !!!!!!!!!!!!!!!!!!!!!!!!
-  parse(user_input) {
+  parse(user_input: string) {
+    if (user_input.length > 0) {
+      let statements: string[] = user_input.split("\n");
 
+      for (let s of statements) {
+        // Try catch for error handling
+        let statement = Statement.getStatement(s);
+        statement.parse();
+      }
+    }
     // This just returns a basic version of the xml
     // TODO: add parsing functionality
     return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +

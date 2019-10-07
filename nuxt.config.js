@@ -45,5 +45,6 @@ export default {
     */
     extend(config, ctx) {
     }
-  }
+  },
+  buildModules: ['@nuxt/typescript-build']
 }
