@@ -12,14 +12,14 @@ export default class Time implements ASTNode {
 
   parse() {
     let upperAndLower = this.statement.replace(this.operator, "").trim();
-    if (upperAndLower.indexOf(",") < 0) {
-      throw new Error(`Wrong definition of time signature, should be of the form: number, number`);
+    if (upperAndLower.indexOf("/") < 0) {
+      throw new Error(`Wrong definition of time signature, should be of the form: number / number`);
     } else {
-      this.upper = parseInt(upperAndLower.split(",")[0]);
+      this.upper = parseInt(upperAndLower.split("/")[0]);
       if (this.upper > 9 || this.upper < 1) {
         throw new Error(`Upper has to be between 1 and 9 inclusive`);
       }
-      this.lower = parseInt(upperAndLower.split(",")[1]);
+      this.lower = parseInt(upperAndLower.split("/")[1]);
       if (!this.isPowerOfTwo(this.lower)) {
         throw new Error(`Lower must be a power of 2`);
       }
