@@ -59,7 +59,7 @@ export default {
 #input-area {
   min-height: 100vh;
   width: 30vw;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 #osmdCanvas {
