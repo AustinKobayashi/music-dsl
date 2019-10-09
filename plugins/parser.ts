@@ -1,20 +1,24 @@
-import Statement from "../ast/statement";
-import title from "~/ast/title";
-import tokenizer from './tokenizer';
+import NODE from "~/plugins/NODE";
+import PROGRAM from "~/plugins/PROGRAM";
+import tokenizer from "~/plugins/tokenizer";
 
 const parser = {
 
-  // !!!!!!!!!!!!!!!!!!!!!!!!
-  // parse method stub
-  // !!!!!!!!!!!!!!!!!!!!!!!!
-  parse(user_input: string) {
-    try {
-      let tokens = tokenizer.tokenize(user_input);
-      console.log(tokens);
 
-      // TODO do stuff with tokens
-    } catch (e) {
-    }
+  parse(user_input: string): string {
+    try {
+        tokenizer.tokenize(user_input);
+
+        let program: NODE = new PROGRAM();
+        program.parse();
+
+        //...type checking...
+        program.name_check(); //Assert print uses sections that actually exist
+        program.duration_check(); //Assert sections in print have same duration
+
+        program.evaluate();
+
+    } catch (e) {}
 
     return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
       '<!DOCTYPE score-partwise PUBLIC\n' +
