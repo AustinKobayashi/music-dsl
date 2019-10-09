@@ -23,6 +23,11 @@ class tokenizer {
         return token;
     }
 
+    public static check_next_token (regexp: string): boolean {
+        let token: string = this.tokens[this.pointer + 1];
+        return RegExp(regexp, 'g').test(token);
+    }
+
     public static check_token (regexp: string): boolean {
         let token: string = this.get_cur_token();
         return RegExp(regexp, 'g').test(token);
