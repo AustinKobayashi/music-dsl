@@ -19,7 +19,7 @@ class tokenizer {
     public static get_and_check_next (regexp: string): string {
         let token: string = this.get_next_token();
         if (!this.check_token(regexp))
-            throw new Error('Token check failed');
+            throw new Error(`Token check failed for ${regexp}`);
         return token;
     }
 
@@ -40,35 +40,61 @@ class tokenizer {
     }
 
 
-    public static get_cur_token (): string {
+    private static get_cur_token (): string {
         return this.tokens[this.pointer];
     }
 
 
     public static has_more_tokens (): boolean {
-        return this.pointer !== this.tokens.length - 1;
+        if (this.tokens.length < 3)
+            throw new Error('Not enough tokens');
+
+        return this.pointer !== this.tokens.length;
+    }
+
+
+
+    public static is_next_token_note (): boolean {
+        return RegExp('[(A-Z)|(a-z)]\\d(\\s*#|\\s*b)?', 'g').test(this.tokens[this.pointer + 1]);
+    }
+
+    public static is_next_token_duration(): boolean {
+        return this.is_duration(this.tokens[this.pointer + 1]);
+    }
+
+    public static is_next_token_articulation(): boolean {
+        return this.is_articulation(this.tokens[this.pointer + 1]);
+    }
+
+    public static is_next_token_dynamic(): boolean {
+        return this.is_dynamic(this.tokens[this.pointer + 1]);
+    }
+
+    public static is_next_token_quality(): boolean {
+        return this.is_quality(this.tokens[this.pointer + 1]);
     }
 
 
 
 
-    public static is_note (note: string): boolean {
-        return RegExp('[(A-Z)|(a-z)]\d(\s*#|\s*b)?', 'g').test(note);
+    private static is_note (note: string): boolean {
+        return RegExp('[(A-Z)|(a-z)]\\d(\\s*#|\\s*b)?', 'g').test(note);
     }
 
-    public static is_duration (duration: string): boolean {
+
+    private static is_duration (duration: string): boolean {
         return durations.includes(duration);
     }
 
-    public static is_articulation (articulation: string): boolean {
+    private static is_articulation (articulation: string): boolean {
         return articulations.includes(articulation);
     }
 
-    public static is_dynamic (dynamic: string): boolean {
+    private static is_dynamic (dynamic: string): boolean {
         return dynamics.includes(dynamic);
     }
 
-    public static is_quality (quality: string): boolean {
+    private static is_quality (quality: string): boolean {
         return quality === 'major' || quality === 'minor';
     }
 
@@ -95,11 +121,11 @@ class tokenizer {
         for (const literal of literals)
             token_str = token_str.replace(new RegExp(literal, 'g'), `_${literal}_`);
 
-        this.tokens = token_str.split('_').join(', ').split(', ').map(str => {
+        this.tokens = ['null_token'].concat(token_str.split('_').join(', ').split(', ').map(str => {
             return str.trim();
         }).filter(str => {
             return str !== '';
-        });
+        }));
         console.log(this.tokens);
     }
 
