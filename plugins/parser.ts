@@ -18,7 +18,9 @@ const parser = {
 
         program.evaluate();
 
-    } catch (e) {}
+    } catch (e) {
+        console.warn(e);
+    }
 
     return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
       '<!DOCTYPE score-partwise PUBLIC\n' +

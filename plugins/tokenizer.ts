@@ -3,10 +3,11 @@ const durations = ['whole', 'half', 'quarter', 'eighth', 'sixteenth', 'thirty-se
 const articulations = ['staccato', 'tenuto', 'marcato', 'begin slur', 'end slur'];
 
 const dynamics = ['begin ppp', 'end ppp', 'begin pp', 'end pp', 'begin p', 'end p', 'begin mp', 'end mp', 'begin mf', 'end mf',
-    'begin f', 'end f', 'begin ff', 'end f', 'begin fff', 'end fff', 'begin crescendo', 'end crescendo', 'begin decrescendo',
-    'end decrescendo', 'begin diminuendo', 'end diminuendo'];
+    'begin fp', 'end fp', 'begin fz', 'end fz', 'begin rf', 'end rf', 'begin rfz', 'end rfz', 'begin sf', 'end sf', 'begin f',
+    'end f', 'begin ff', 'end f', 'begin fff', 'end fff', 'begin crescendo', 'end crescendo', 'begin decrescendo', 'end decrescendo',
+    'begin diminuendo', 'end diminuendo'];
 
-const literals = ['TITLE', '<-{', '<- {', '}', 'CLEF', 'KEY', 'TIME', 'TEMPO', 'PRINT', 'REPEAT'];
+const literals = ['TITLE', '<-{', '<- {', '}', 'CLEF', 'KEY', 'major', 'minor', 'TIME', '/', 'TEMPO', 'PRINT', 'REPEAT'];
 
 class tokenizer {
 
@@ -47,7 +48,7 @@ class tokenizer {
 
 
     public static is_note (note: string): boolean {
-        return RegExp('[(A-Z)|(a-z)]\d', 'g').test(note);
+        return RegExp('[(A-Z)|(a-z)]\d(\s*#|\s*b)?', 'g').test(note);
     }
 
     public static is_duration (duration: string): boolean {
@@ -62,13 +63,18 @@ class tokenizer {
         return dynamics.includes(dynamic);
     }
 
-
+    public static is_quality (quality: string): boolean {
+        return quality === 'major' || quality === 'minor';
+    }
 
 
     static tokenize (user_input: string): void {
 
+        this.tokens.splice(0, this.tokens.length - 1);
+        this.pointer = 0;
+
         let token_str = user_input;
-        let repeats: Array<string> = token_str.match(/REPEAT.*/g);
+        let repeats: Array<string> = token_str.match(/REPEAT.*/g) || [];
 
         for (let repeat of repeats) {
             let repeat_substr = repeat.match(/\s+\d+/g)[0];
@@ -89,6 +95,7 @@ class tokenizer {
         }).filter(str => {
             return str !== '';
         });
+        console.log(this.tokens);
     }
 
 
