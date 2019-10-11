@@ -10,6 +10,7 @@ abstract class NODE {
 
     abstract parse(): void;
     abstract evaluate(): void;
+    abstract support_check(): void;
     abstract name_check(): void;
     abstract duration_check(): void;
 }

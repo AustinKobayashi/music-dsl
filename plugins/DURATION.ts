@@ -12,6 +12,10 @@ class DURATION extends STATEMENT {
 
     evaluate(): void {
     }
+    
+    support_check(): void {
+        throw new Error("Method not implemented.");
+    }
 
     name_check(): void {
     }
