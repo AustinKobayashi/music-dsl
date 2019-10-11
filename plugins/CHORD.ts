@@ -1,11 +1,13 @@
 import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
 import NOTE from "~/plugins/NOTE";
+import DYNAMIC from "~/plugins/DYNAMIC";
 import DURATION from "~/plugins/DURATION";
 
 class CHORD extends STATEMENT {
 
     notes: Array<NOTE> = [];
+    dynamic: DYNAMIC;
     duration: DURATION;
 
     // needs a loop of sorts
@@ -31,9 +33,8 @@ class CHORD extends STATEMENT {
 
 
         } else if (tokenizer.is_next_token_dynamic()) {
-            // dynamic
-            throw new Error('Dynamic Not Implemented Yet');
-
+            this.dynamic = new DYNAMIC();
+            this.dynamic.parse();
 
         } else { throw new Error('Invalid chord'); }
     }
