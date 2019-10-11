@@ -1,10 +1,12 @@
 import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
 import NOTE from "~/plugins/NOTE";
+import DURATION from "~/plugins/DURATION";
 
 class CHORD extends STATEMENT {
 
     notes: Array<NOTE> = [];
+    duration: DURATION;
 
     // needs a loop of sorts
     parse(): void {
@@ -20,7 +22,8 @@ class CHORD extends STATEMENT {
 
         if (tokenizer.is_next_token_duration()) {
             // duration
-            throw new Error('Duration Not Implemented Yet');
+            this.duration = new DURATION();
+            this.duration.parse();
 
         } else if (tokenizer.is_next_token_articulation()) {
             // articulation
