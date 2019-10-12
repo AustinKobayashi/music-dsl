@@ -1,8 +1,9 @@
 import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
 import CHORD from "~/plugins/CHORD";
-import TIME from "./TIME";
-import CLEF from "./CLEF";
+import TIME, { TIME_TOKEN } from "./TIME";
+import CLEF, { CLEF_TOKEN } from "./CLEF";
+import KEY, { KEY_TOKEN } from "./KEY";
 
 class SECTION extends STATEMENT {
     
@@ -12,36 +13,37 @@ class SECTION extends STATEMENT {
     *   Time
     *   Tempo
     */
-
+   
    name: string;
    chords: Array<CHORD> = [];
-   
-   
-   parse(): void {
+   clef: CLEF;
+   key: KEY;
+   time: TIME;
 
+   parse(): void {
+       
        this.name = tokenizer.get_next_token();
        tokenizer.get_and_check_next('<-\\s*{');
        
        while(!tokenizer.check_next_token('}')) {
            
-           if(tokenizer.check_next_token('CLEF')) {
+           if(tokenizer.check_next_token(CLEF_TOKEN)) {
                // clef
-                let clef: CLEF = new CLEF();
-                clef.parse();
-            } else if(tokenizer.check_next_token('KEY')) {
+               this.clef = new CLEF();
+               this.clef.parse();
+            } else if(tokenizer.check_next_token(KEY_TOKEN)) {
                 // key
-                throw new Error('Key Not Implemented Yet');
-                
-
-            } else if(tokenizer.check_next_token('TIME')) {
+                this.key = new KEY();
+                this.key.parse();
+            } else if(tokenizer.check_next_token(TIME_TOKEN)) {
                 // time
-                let time: TIME = new TIME();
-                time.parse();
+                this.time = new TIME();
+                this.time.parse();
             } else if(tokenizer.check_next_token('TEMPO')) {
                 // tempo
                 throw new Error('Tempo Not Implemented Yet');
                 
-
+                
             } else if(tokenizer.is_next_token_note()) {
                 let chord: CHORD = new CHORD();
                 chord.parse();
@@ -52,6 +54,10 @@ class SECTION extends STATEMENT {
     }
     
     evaluate(): void {
+        this.clef.evaluate();
+        this.key.evaluate();
+        this.time.evaluate();
+        // Have relevant XML for SECTION to wrap all CLEF, KEY, TIME, TEMPO and CHORD(s) and add to PROGRAM.xml
     }
     
     support_check(): void {
@@ -62,6 +68,10 @@ class SECTION extends STATEMENT {
     }
     
     duration_check(): void {
+    }
+
+    get_xml(): string {
+        throw new Error("Method not implemented.");
     }
 }
 

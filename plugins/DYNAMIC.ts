@@ -19,10 +19,13 @@ class DYNAMIC extends STATEMENT {
     
     name_check(): void {
     }
-
+    
     duration_check(): void {
     }
-
+    
+    get_xml(): string {
+        throw new Error("Method not implemented.");
+    }
 }
 
 export default DYNAMIC;

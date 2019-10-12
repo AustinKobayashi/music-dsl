@@ -6,6 +6,8 @@ abstract class NODE {
     // For duration check
     public static section_durations: Map<string, string> = new Map();
 
+    // For PRINT to print these parts x number of times and in specific order
+    public static xml: Map<string, string> = new Map();
 
 
     abstract parse(): void;
@@ -13,6 +15,8 @@ abstract class NODE {
     abstract support_check(): void;
     abstract name_check(): void;
     abstract duration_check(): void;
+
+    abstract get_xml(): string;
 }
 
 export default NODE;

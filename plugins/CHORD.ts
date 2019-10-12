@@ -52,6 +52,9 @@ class CHORD extends STATEMENT {
     duration_check(): void {
     }
 
+    get_xml(): string {
+        throw new Error("Method not implemented.");
+    }
 }
 
 export default CHORD;
