@@ -5,12 +5,11 @@ import tokenizer from "~/plugins/tokenizer";
 import TITLE, { TITLE_TOKEN } from './TITLE';
 
 class PROGRAM extends NODE {
-    
+
     statements: Array<STATEMENT> = [];
 
     parse(): void {
-        while(tokenizer.has_more_tokens()) {
-            
+        while (tokenizer.has_more_tokens()) {
             if (tokenizer.check_next_token(TITLE_TOKEN)) {
                 // title
                 let title: TITLE = new TITLE();
@@ -20,7 +19,7 @@ class PROGRAM extends NODE {
             } else if (tokenizer.check_next_token('PRINT')) {
                 // print
                 throw new Error('Print Not Implemented Yet');
-                
+
 
             } else {
                 let statement: STATEMENT = new SECTION();
@@ -29,7 +28,7 @@ class PROGRAM extends NODE {
             }
         }
     }
-    
+
     evaluate(): void {
         for (let s of this.statements) {
             s.evaluate();

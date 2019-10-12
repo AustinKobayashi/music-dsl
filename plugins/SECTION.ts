@@ -6,7 +6,7 @@ import CLEF, { CLEF_TOKEN } from "./CLEF";
 import KEY, { KEY_TOKEN } from "./KEY";
 
 class SECTION extends STATEMENT {
-    
+
     /* Variables for:
     *   Clef
     *   Key
@@ -42,17 +42,17 @@ class SECTION extends STATEMENT {
             } else if(tokenizer.check_next_token('TEMPO')) {
                 // tempo
                 throw new Error('Tempo Not Implemented Yet');
-                
-                
+
+
             } else if(tokenizer.is_next_token_note()) {
                 let chord: CHORD = new CHORD();
                 chord.parse();
                 this.chords.push(chord);
-                
+
             } else { throw new Error('Invalid Section'); }
         }
     }
-    
+
     evaluate(): void {
         this.clef.evaluate();
         this.key.evaluate();
@@ -66,7 +66,7 @@ class SECTION extends STATEMENT {
     
     name_check(): void {
     }
-    
+
     duration_check(): void {
     }
 

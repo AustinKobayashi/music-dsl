@@ -2,7 +2,7 @@ import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
 
 class NOTE extends STATEMENT {
-    
+
     pitch: string;
     octave: number;
     modifier: string;
@@ -24,7 +24,7 @@ class NOTE extends STATEMENT {
             this.octave = parseInt(token.charAt(2), 10);
         }
     }
-    
+
     evaluate(): void {
     }
     
@@ -34,7 +34,7 @@ class NOTE extends STATEMENT {
     
     name_check(): void {
     }
-    
+
     duration_check(): void {
     }
 
