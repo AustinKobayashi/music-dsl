@@ -16,7 +16,7 @@ class CHORD extends STATEMENT {
         note.parse();
         this.notes.push(note);
 
-        while(tokenizer.is_next_token_note()) {
+        while (tokenizer.is_next_token_note()) {
             let note: NOTE = new NOTE();
             note.parse();
             this.notes.push(note);
@@ -42,12 +42,19 @@ class CHORD extends STATEMENT {
     evaluate(): void {
     }
 
+    support_check(): void {
+        throw new Error("Method not implemented.");
+    }
+    
     name_check(): void {
     }
 
     duration_check(): void {
     }
 
+    get_xml(): string {
+        throw new Error("Method not implemented.");
+    }
 }
 
 export default CHORD;

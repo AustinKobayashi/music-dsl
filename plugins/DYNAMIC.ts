@@ -12,13 +12,20 @@ class DYNAMIC extends STATEMENT {
 
     evaluate(): void {
     }
-
+    
+    support_check(): void {
+        throw new Error("Method not implemented.");
+    }
+    
     name_check(): void {
     }
 
     duration_check(): void {
     }
-
+    
+    get_xml(): string {
+        throw new Error("Method not implemented.");
+    }
 }
 
 export default DYNAMIC;
