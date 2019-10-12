@@ -51,6 +51,7 @@ class SECTION extends STATEMENT {
 
             } else { throw new Error('Invalid Section'); }
         }
+        tokenizer.get_next_token();
     }
 
     evaluate(): void {
