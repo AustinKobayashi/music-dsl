@@ -17,6 +17,21 @@ class CLEF extends STATEMENT {
   }
 
   evaluate(): void {
+    if (this.clef === "Treble") {
+      this.sign = "G";
+      this.line = 2;
+    }
+    
+    if (this.clef === "Alto") {
+      this.sign = "C";
+      this.line = 3;
+    }
+
+    if (this.clef === "Bass") {
+      this.sign = "F";
+      this.line = 4;
+    }
+
     this.xml = `<clef><sign>${this.sign}</sign><line>${this.line}</line></clef>`;
   }
 
