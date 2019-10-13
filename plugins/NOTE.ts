@@ -13,10 +13,15 @@ class NOTE extends STATEMENT {
         token = token.replace(/\s+/g,'');
 
         this.pitch = token.charAt(0);
-        this.octave = parseInt(token.charAt(1), 10);
-
         if (token.length === 3)
-            this.modifier = token.charAt(2);
+        {
+            this.modifier = token.charAt(1);
+            this.octave = parseInt(token.charAt(2), 10);
+        }
+        else if (token.length === 2)
+        {
+            this.octave = parseInt(token.charAt(1));
+        }
     }
 
     evaluate(): void {
