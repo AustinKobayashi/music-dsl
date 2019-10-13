@@ -55,10 +55,11 @@ class SECTION extends STATEMENT {
        let measure_duration = 0;
        let i = 0;
 
+       this.xml += `<part id="${this.name}">\n`;
 
        this.create_new_measure(measure_number ++);
 
-      while (i < this.chords.length) {
+       while (i < this.chords.length) {
            if (measure_duration === 128 * 4) {
                this.xml += '</measure>\n';
                this.create_new_measure(measure_number ++);
@@ -73,12 +74,12 @@ class SECTION extends STATEMENT {
            i++;
        }
 
-        if (measure_duration !== 128 * 4)
+       if (measure_duration !== 128 * 4)
            throw new Error('Invalid durations');
 
-        this.xml += '</measure>\n';
-
-        NODE.section_names.push(this.name);
+       this.xml += '</measure>\n';
+       this.xml += '</part>\n';
+       NODE.section_names.push(this.name);
 
         // TODO section duration
         //NODE.section_durations[name] = duration;
