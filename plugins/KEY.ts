@@ -83,6 +83,9 @@ class KEY extends STATEMENT {
   get_xml(): string {
     return this.xml;
   }
+
+    clef_check(): void {
+    }
 }
 
 export default KEY;

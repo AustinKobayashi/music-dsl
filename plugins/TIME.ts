@@ -35,6 +35,9 @@ class TIME extends STATEMENT {
   get_xml(): string {
     return this.xml;
   }
+
+    clef_check(): void {
+    }
 }
 
 export default TIME;

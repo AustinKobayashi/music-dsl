@@ -49,10 +49,15 @@ const parser = {
       '          <beats>4</beats>\n' +
       '          <beat-type>4</beat-type>\n' +
       '        </time>\n' +
-      '        <clef>\n' +
+      '        <clef number="1">\n' +
       '          <sign>G</sign>\n' +
       '          <line>2</line>\n' +
       '        </clef>\n' +
+        '        <clef number="2">\n' +
+        '          <sign>F</sign>\n' +
+        '          <line>4</line>\n' +
+        '        </clef>\n' +
+        '        <staves>2</staves>\n' +
       '      </attributes>\n' +
       '      <note>\n' +
       '        <pitch>\n' +
@@ -61,7 +66,17 @@ const parser = {
       '        </pitch>\n' +
       '        <duration>4</duration>\n' +
       '        <type>quarter</type>\n' +
-      '      </note>\n' +
+        '        <staff>1</staff>\n' +
+        '      </note>\n' +
+        '      <note>\n' +
+        '        <pitch>\n' +
+        '          <step>C</step>\n' +
+        '          <octave>3</octave>\n' +
+        '        </pitch>\n' +
+        '        <duration>4</duration>\n' +
+        '        <type>quarter</type>\n' +
+        '        <staff>2</staff>\n' +
+        '      </note>\n' +
       '    </measure>\n' +
       '  </part>\n' +
       '</score-partwise>\n';

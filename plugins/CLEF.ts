@@ -52,6 +52,9 @@ class CLEF extends STATEMENT {
   get_xml() {
     return this.xml;
   }
+
+    clef_check(): void {
+    }
 }
 
 export default CLEF;

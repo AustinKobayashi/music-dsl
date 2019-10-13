@@ -20,6 +20,8 @@ class SECTION extends STATEMENT {
    key: KEY;
    time: TIME;
 
+   total_duration: number;
+   
    parse(): void {
        
        this.name = tokenizer.get_next_token();
@@ -73,6 +75,13 @@ class SECTION extends STATEMENT {
 
     get_xml(): string {
         throw new Error("Method not implemented.");
+    }
+
+    get_total_duration(): number {
+       return this.total_duration;
+    }
+
+    clef_check(): void {
     }
 }
 

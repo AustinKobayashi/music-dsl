@@ -15,6 +15,7 @@ abstract class NODE {
     abstract support_check(): void;
     abstract name_check(): void;
     abstract duration_check(): void;
+    abstract clef_check(): void;  // to check if stacked sections in print are different clefs
 
     abstract get_xml(): string;
 }

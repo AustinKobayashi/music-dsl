@@ -3,10 +3,12 @@ import STATEMENT from './STATEMENT';
 import SECTION from './SECTION';
 import tokenizer from "~/plugins/tokenizer";
 import TITLE, { TITLE_TOKEN } from './TITLE';
+import PRINT from "~/plugins/PRINT";
 
 class PROGRAM extends NODE {
 
     statements: Array<STATEMENT> = [];
+    print: PRINT;
 
     parse(): void {
         while (tokenizer.has_more_tokens()) {
@@ -18,8 +20,8 @@ class PROGRAM extends NODE {
                 
             } else if (tokenizer.check_next_token('PRINT')) {
                 // print
-                throw new Error('Print Not Implemented Yet');
-
+                this.print = new PRINT();
+                this.print.parse();
 
             } else {
                 let statement: STATEMENT = new SECTION();
@@ -46,6 +48,9 @@ class PROGRAM extends NODE {
 
     get_xml(): string {
         throw new Error("Method not implemented.");
+    }
+
+    clef_check(): void {
     }
 }
 

@@ -50,6 +50,9 @@ class NOTE extends STATEMENT {
     get_xml(): string {
         throw new Error("Method not implemented.");
     }
+
+    clef_check(): void {
+    }
 }
 
 export default NOTE;
