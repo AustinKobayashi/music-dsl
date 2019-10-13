@@ -8,7 +8,7 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,no-console */
 import '../static/opensheetmusicdisplay.min'
 import parser from '../plugins/parser.ts'
 
@@ -26,14 +26,6 @@ export default {
       drawFromMeasureNumber: 1,
       drawUpToMeasureNumber: Number.MAX_SAFE_INTEGER
     })
-    this.openSheetMusicDisplay
-      .load(parser.parse(''))
-      .then(
-        function () {
-          window.osmd = this.openSheetMusicDisplay
-          this.openSheetMusicDisplay.render()
-        }
-      )
   },
   methods: {
     generate_music() {
@@ -43,6 +35,9 @@ export default {
           function () {
             window.osmd = this.openSheetMusicDisplay
             this.openSheetMusicDisplay.render()
+          },
+          function (e) {
+            console.err(e)
           }
         )
     }

@@ -49,7 +49,7 @@ class tokenizer {
         if (this.tokens.length < 3)
             throw new Error('Not enough tokens');
 
-        return this.pointer !== this.tokens.length;
+        return this.pointer !== this.tokens.length - 1;
     }
 
 

@@ -14,7 +14,7 @@ class SECTION extends STATEMENT {
    key: KEY;
    time: TIME;
 
-   total_duration: number;
+   total_duration: number = 0;
 
    xml: string = '';
 
@@ -49,7 +49,6 @@ class SECTION extends STATEMENT {
             } else { throw new Error('Invalid Section'); }
        }
        tokenizer.get_next_token();
-       tokenizer.get_next_token();
    }
 
     evaluate(): void {
@@ -62,7 +61,7 @@ class SECTION extends STATEMENT {
        this.create_new_measure(measure_number ++);
 
        while (i < this.chords.length) {
-           if (measure_duration === 128 * 4) {
+           if (measure_duration === 128 * 4) { //TODO: this assumes 4/4, fix to allow other time signatures
                this.xml += '</measure>\n';
                this.create_new_measure(measure_number ++);
                measure_duration = 0;
@@ -87,7 +86,7 @@ class SECTION extends STATEMENT {
        NODE.section_durations.set(this.name, this.total_duration);
 
        NODE.xml.set(this.name, this.xml);
-       console.log(this.xml);
+       NODE.sections.set(this.name, this);
     }
 
 
@@ -119,11 +118,23 @@ class SECTION extends STATEMENT {
     }
 
     get_xml(): string {
-        throw new Error("Method not implemented.");
+        return this.xml;
     }
 
     get_total_duration(): number {
        return this.total_duration;
+    }
+
+    get_key(): KEY {
+       return this.key;
+    }
+
+    get_time(): TIME {
+        return this.time;
+    }
+
+    get_clef(): CLEF {
+        return this.clef;
     }
 
     clef_check(): void {

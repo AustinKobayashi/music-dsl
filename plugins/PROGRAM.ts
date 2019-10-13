@@ -10,16 +10,16 @@ class PROGRAM extends NODE {
     statements: Array<STATEMENT> = [];
     print: PRINT;
 
+    xml: string;
+
     parse(): void {
         while (tokenizer.has_more_tokens()) {
             if (tokenizer.check_next_token(TITLE_TOKEN)) {
-                // title
                 let title: TITLE = new TITLE();
                 title.parse();
                 this.statements.push(title);
                 
             } else if (tokenizer.check_next_token('PRINT')) {
-                // print
                 this.print = new PRINT();
                 this.print.parse();
 
@@ -35,6 +35,9 @@ class PROGRAM extends NODE {
         for (let s of this.statements) {
             s.evaluate();
         }
+
+        this.print.evaluate();
+        this.xml = this.print.get_xml();
     }
     
     support_check(): void {
@@ -47,7 +50,7 @@ class PROGRAM extends NODE {
     }
 
     get_xml(): string {
-        throw new Error("Method not implemented.");
+        return this.xml;
     }
 
     clef_check(): void {
