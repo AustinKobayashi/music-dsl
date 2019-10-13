@@ -32,7 +32,7 @@ class CLEF extends STATEMENT {
       this.line = 4;
     }
 
-    this.xml = `<clef><sign>${this.sign}</sign><line>${this.line}</line></clef>`;
+    this.xml = `<clef>\n<sign>${this.sign}</sign>\n<line>${this.line}</line>\n</clef>\n`;
   }
 
   support_check(): void {

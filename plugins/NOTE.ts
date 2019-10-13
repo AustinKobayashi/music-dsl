@@ -6,8 +6,14 @@ class NOTE extends STATEMENT {
     pitch: string;
     octave: number;
     modifier: string;
-    
+    duration: string;
+    articulation: string;
+
+    is_chord: boolean;
+
     token_length: number;
+
+    xml: string = '';
 
     parse(): void {
         let token: string = tokenizer.get_next_token();
@@ -26,6 +32,27 @@ class NOTE extends STATEMENT {
     }
 
     evaluate(): void {
+        this.xml += '<note>\n';
+
+        if (this.is_chord)
+            this.xml += '<chord/>\n';
+
+        this.xml += '<pitch>\n';
+        this.xml += '<step>' + this.pitch + '</step>\n';
+        this.xml += '<octave>' + this.octave + '</octave>\n';
+        this.xml += '</pitch>\n';
+        this.xml += this.duration;
+        this.xml += '<voice>1</voice>\n';
+
+        if (this.modifier === '#')
+            this.xml += '<accidental>sharp</accidental>\n';
+        if (this.modifier === 'b')
+            this.xml += '<accidental>flat</accidental>\n';
+
+        if (this.articulation)
+            this.xml += this.articulation;
+
+        this.xml += '</note>\n';
     }
     
     support_check(): void {
@@ -48,7 +75,19 @@ class NOTE extends STATEMENT {
     }
 
     get_xml(): string {
-        throw new Error("Method not implemented.");
+        return this.xml;
+    }
+
+    set_duration(duration: string) {
+        this.duration = duration;
+    }
+
+    set_is_chord(is_chord: boolean) {
+        this.is_chord = is_chord;
+    }
+
+    set_articulation(articulation: string) {
+        this.articulation = articulation;
     }
 
     clef_check(): void {

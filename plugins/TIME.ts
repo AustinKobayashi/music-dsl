@@ -17,7 +17,7 @@ class TIME extends STATEMENT {
     this.beatType = parseInt(tokenizer.get_next_token());
   }
   evaluate(): void {
-    this.xml = `<time><beats>${this.beats}</beats><beat-type>${this.beatType}</beat-type></time>`;
+    this.xml = `<time>\n<beats>${this.beats}</beats>\n<beat-type>${this.beatType}</beat-type>\n</time>\n`;
   }
 
   support_check(): void {

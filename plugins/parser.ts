@@ -15,9 +15,9 @@ const parser = {
         program.parse();
 
         //...type checking...
-        program.support_check();
-        program.name_check(); //Assert print uses sections that actually exist
-        program.duration_check(); //Assert sections in print have same duration
+        // program.support_check();
+        // program.name_check(); //Assert print uses sections that actually exist
+        // program.duration_check(); //Assert sections in print have same duration
 
         program.evaluate();
 
@@ -64,7 +64,7 @@ const parser = {
       '          <step>C</step>\n' +
       '          <octave>3</octave>\n' +
       '        </pitch>\n' +
-      '        <duration>4</duration>\n' +
+      '        <duration>1</duration>\n' +
       '        <type>quarter</type>\n' +
         '        <staff>1</staff>\n' +
         '      </note>\n' +
