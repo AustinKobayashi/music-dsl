@@ -40,7 +40,7 @@ class tokenizer {
     }
 
 
-    public static get_cur_token (): string {
+    private static get_cur_token (): string {
         return this.tokens[this.pointer];
     }
 
