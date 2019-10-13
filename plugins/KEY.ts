@@ -61,7 +61,7 @@ class KEY extends STATEMENT {
     this.note.evaluate();
     let key = `${this.note.to_string()} ${this.quality}`;
 
-    this.xml = `<key><fifths>${KEY_TO_FIFTHS[key]}</fifths></key>`;  
+    this.xml = `<key>\n<fifths>${KEY_TO_FIFTHS[key]}</fifths>\n</key>\n`;
   }
   
   support_check(): void {

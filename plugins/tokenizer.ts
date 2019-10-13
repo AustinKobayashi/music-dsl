@@ -1,10 +1,10 @@
 const durations = ['whole', 'half', 'quarter', 'eighth', 'sixteenth', 'thirty-second', 'sixty-fourth', 'hundred twenty-eighth'];
 
-const articulations = ['staccato', 'tenuto', 'marcato', 'begin slur', 'end slur'];
+const articulations = ['staccato', 'tenuto', 'marcato', 'accent', 'begin slur', 'end slur'];
 
-const dynamics = ['begin ppp', 'end ppp', 'begin pp', 'end pp', 'begin p', 'end p', 'begin mp', 'end mp', 'begin mf', 'end mf',
-    'begin fp', 'end fp', 'begin fz', 'end fz', 'begin rf', 'end rf', 'begin rfz', 'end rfz', 'begin sf', 'end sf', 'begin f',
-    'end f', 'begin ff', 'end f', 'begin fff', 'end fff', 'begin crescendo', 'end crescendo', 'begin decrescendo', 'end decrescendo',
+const dynamics = ['ppp', 'pp', 'p', 'mp', 'mf', 'fp', 'fz', 'rf', 'rfz', 'sf', 'f', 'ff', 'fff'];
+
+const directions = ['begin crescendo', 'end crescendo', 'begin decrescendo', 'end decrescendo',
     'begin diminuendo', 'end diminuendo'];
 
 const literals = ['TITLE', '<-{', '<- {', '}', 'CLEF', 'KEY', 'major', 'minor', 'TIME', '/', 'TEMPO', 'PRINT', 'REPEAT'];
@@ -40,7 +40,7 @@ class tokenizer {
     }
 
 
-    private static get_cur_token (): string {
+    public static get_cur_token (): string {
         return this.tokens[this.pointer];
     }
 
@@ -67,7 +67,8 @@ class tokenizer {
     }
 
     public static is_next_token_dynamic(): boolean {
-        return this.is_dynamic(this.tokens[this.pointer + 1]);
+        return this.is_dynamic(this.tokens[this.pointer + 1]) ||
+            this.is_direction(this.tokens[this.pointer + 1]);
     }
 
     public static is_next_token_quality(): boolean {
@@ -90,8 +91,12 @@ class tokenizer {
         return articulations.includes(articulation);
     }
 
-    private static is_dynamic (dynamic: string): boolean {
+    public static is_dynamic (dynamic: string): boolean {
         return dynamics.includes(dynamic);
+    }
+
+    public static is_direction (direction: string): boolean {
+        return directions.includes(direction);
     }
 
     private static is_quality (quality: string): boolean {
