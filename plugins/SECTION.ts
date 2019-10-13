@@ -14,6 +14,8 @@ class SECTION extends STATEMENT {
    key: KEY;
    time: TIME;
 
+   total_duration: number;
+
    xml: string = '';
 
 
@@ -71,6 +73,7 @@ class SECTION extends STATEMENT {
            this.chords[i].evaluate();
            this.xml += this.chords[i].get_xml();
            measure_duration += this.chords[i].get_duration();
+           this.total_duration += this.chords[i].get_duration();
            i++;
        }
 
@@ -81,11 +84,10 @@ class SECTION extends STATEMENT {
        this.xml += '</part>\n';
        NODE.section_names.push(this.name);
 
-        // TODO section duration
-        //NODE.section_durations[name] = duration;
+       NODE.section_durations.set(this.name, this.total_duration);
 
-        NODE.xml.set(this.name, this.xml);
-        console.log(this.xml);
+       NODE.xml.set(this.name, this.xml);
+       console.log(this.xml);
     }
 
 
