@@ -2,6 +2,8 @@ import NODE from "~/plugins/NODE";
 import PROGRAM from "~/plugins/PROGRAM";
 import tokenizer from "~/plugins/tokenizer";
 
+export const resultXML: string = "";
+
 const parser = {
 
 
@@ -13,6 +15,7 @@ const parser = {
         program.parse();
 
         //...type checking...
+        program.support_check();
         program.name_check(); //Assert print uses sections that actually exist
         program.duration_check(); //Assert sections in print have same duration
 
@@ -27,6 +30,9 @@ const parser = {
       '    "-//Recordare//DTD MusicXML 3.1 Partwise//EN"\n' +
       '    "http://www.musicxml.org/dtds/partwise.dtd">\n' +
       '<score-partwise version="3.1">\n' +
+      '  <work>\n' +
+      '    <work-title>Winterreise</work-title>\n' +
+      ' </work>\n' +
       '  <part-list>\n' +
       '    <score-part id="P1">\n' +
       '      <part-name>Music</part-name>\n' +
