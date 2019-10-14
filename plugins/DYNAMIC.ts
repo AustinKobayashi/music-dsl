@@ -3,60 +3,57 @@ import tokenizer from "~/plugins/tokenizer";
 
 class DYNAMIC extends STATEMENT {
 
-    dynamic: string;
-    xml: string = '';
+  dynamic: string;
+  xml: string = '';
 
-    // needs a loop of sorts
-    parse(): void {
-        this.dynamic = tokenizer.get_next_token();
+  parse(): void {
+    this.dynamic = tokenizer.get_next_token();
+  }
+
+  evaluate(): void {
+    this.xml += '<direction>\n';
+    this.xml += '<direction-type>\n';
+
+    if (tokenizer.is_dynamic(this.dynamic)) {
+      this.xml += '<dynamics>\n';
+      this.xml += '<' + this.dynamic + '/>\n';
+      this.xml += '</dynamics>\n';
+    } else if (tokenizer.is_direction(this.dynamic)) {
+      if (this.dynamic.includes('begin')) {
+        if (this.dynamic.includes('crescendo'))
+          this.xml += '<wedge spread="0" type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
+        if (this.dynamic.includes('diminuendo'))
+          this.xml += '<wedge type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
+
+      } else if (this.dynamic.includes('end')) {
+        if (this.dynamic.includes('crescendo'))
+          this.xml += '<wedge spread="15" type="stop"/>\n';
+        if (this.dynamic.includes('diminuendo'))
+          this.xml += '<wedge type="stop"/>\n';
+
+      }
+    } else {
+      throw new Error('Invalid dynamic');
     }
 
-    evaluate(): void {
-        this.xml += '<direction>\n';
-        this.xml += '<direction-type>\n';
+    this.xml += '</direction-type>\n';
+    this.xml += '</direction>\n';
+  }
 
-        if (tokenizer.is_dynamic(this.dynamic)) {
-            this.xml += '<dynamics>\n';
-            this.xml += '<' + this.dynamic + '/>\n';
-            this.xml += '</dynamics>\n';
-        } else if (tokenizer.is_direction(this.dynamic)) {
-            if (this.dynamic.includes('begin')) {
-                if (this.dynamic.includes('crescendo'))
-                    this.xml += '<wedge spread="0" type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
-                if (this.dynamic.includes('diminuendo'))
-                    this.xml += '<wedge type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
+  get_xml(): string {
+    return this.xml;
+  }
 
-            } else if (this.dynamic.includes('end')) {
-                if (this.dynamic.includes('crescendo'))
-                    this.xml += '<wedge spread="15" type="stop"/>\n';
-                if (this.dynamic.includes('diminuendo'))
-                    this.xml += '<wedge type="stop"/>\n';
+  // not used
+  clef_check(): void { }
 
-            }
-        } else {
-            throw new Error('Invalid dynamic');
-        }
+  duration_check(): void { }
 
-        this.xml += '</direction-type>\n';
-        this.xml += '</direction>\n';
-    }
-    
-    support_check(): void {
-        throw new Error("Method not implemented.");
-    }
-    
-    name_check(): void {
-    }
+  name_check(): void { }
 
-    duration_check(): void {
-    }
-    
-    get_xml(): string {
-        return this.xml;
-    }
+  // checked in tokenizer
+  support_check(): void { }
 
-    clef_check(): void {
-    }
 }
 
 export default DYNAMIC;

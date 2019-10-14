@@ -21,23 +21,21 @@ class TIME extends STATEMENT {
   }
 
   support_check(): void {
-    if (this.beatType % 2 != 0) {
+    if (this.beatType % 2 != 0)
       throw new Error(`Beat Type ${this.beatType} is not even`);
-    }
-  }
-  name_check(): void {
-    throw new Error("Method not implemented.");
-  }
-  duration_check(): void {
-    throw new Error("Method not implemented.");
   }
 
   get_xml(): string {
     return this.xml;
   }
 
-    clef_check(): void {
-    }
+  // not used
+  clef_check(): void { }
+
+  duration_check(): void { }
+
+  name_check(): void { }
+
 }
 
 export default TIME;

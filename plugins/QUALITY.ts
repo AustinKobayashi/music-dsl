@@ -12,28 +12,27 @@ class QUALITY extends STATEMENT {
     this.support_check();
   }
 
-  // xml built in KEY
   evaluate(): void {}
-
-  // not used
-  duration_check(): void {}
-
-  // not used
-  name_check(): void {}
 
   support_check(): void {
     if (SUPPORTED_QUALITY.indexOf(this.quality) < 0)
       throw new Error(`Quality ${this.quality} is not supported.`);
   }
 
+  // xml built in KEY
+  get_xml(): string {
+    return null;
+  }
+
   // return supported quality for building xml in KEY
   to_string(): string { return this.quality; }
 
-  // xml built in KEY
-  get_xml(): string { return null; }
+  // not used
+  clef_check(): void {}
 
-    clef_check(): void {
-    }
+  duration_check(): void {}
+
+  name_check(): void {}
 
 }
 

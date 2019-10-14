@@ -3,51 +3,46 @@ import tokenizer from "~/plugins/tokenizer";
 
 class ARTICULATION extends STATEMENT {
 
-    articulation: string;
+  articulation: string;
+  xml: string = '';
 
-    xml: string = '';
+  parse(): void {
+    this.articulation = tokenizer.get_next_token();
+  }
 
-    // needs a loop of sorts
-    parse(): void {
-        this.articulation = tokenizer.get_next_token();
+  evaluate(): void {
+    this.xml += '<notations>\n';
+    if (this.articulation.includes('slur')) {
+
+      if (this.articulation.includes('begin')) {
+        this.xml += '<slur number="1" type="start"/>\n';
+      } else if (this.articulation.includes('end')) {
+        this.xml += '<slur number="1" type="stop"/>\n';
+      } else {
+        throw new Error('Invalid articulation');
+      }
+
+    } else {
+      this.xml += '<articulations>\n';
+      this.xml += '<' + this.articulation + '/>\n';
+      this.xml += '</articulations>\n';
     }
+    this.xml += '</notations>\n';
+  }
 
-    evaluate(): void {
-        this.xml += '<notations>\n';
-        if (this.articulation.includes('slur')) {
+  get_xml(): string {
+    return this.xml;
+  }
 
-            if (this.articulation.includes('begin')) {
-                this.xml += '<slur number="1" type="start"/>\n';
-            } else if (this.articulation.includes('end')) {
-                this.xml += '<slur number="1" type="stop"/>\n';
-            } else {
-                throw new Error('Invalid articulation');
-            }
+  // not used
+  clef_check(): void { }
 
-        } else {
-            this.xml += '<articulations>\n';
-            this.xml += '<' + this.articulation + '/>\n';
-            this.xml += '</articulations>\n';
-        }
-        this.xml += '</notations>\n';
-    }
+  duration_check(): void { }
 
-    support_check(): void {
-        throw new Error("Method not implemented.");
-    }
+  name_check(): void { }
 
-    name_check(): void {
-    }
-
-    duration_check(): void {
-    }
-
-    get_xml(): string {
-        return this.xml;
-    }
-
-    clef_check(): void {
-    }
+  // checked in tokenizer
+  support_check(): void { }
 }
 
 export default ARTICULATION;
