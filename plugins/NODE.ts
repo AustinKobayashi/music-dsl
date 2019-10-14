@@ -13,6 +13,8 @@ abstract class NODE {
 
     public static sections: Map<string, SECTION> = new Map();
 
+    public static title: string;
+
     abstract parse(): void;
     abstract evaluate(): void;
     abstract support_check(): void;
