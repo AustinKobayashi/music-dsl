@@ -8,16 +8,13 @@ class PRINT extends STATEMENT {
 
   section_names: Array<Array<string>> = [];
   sections: Array<Array<SECTION>> = [];
-
   xml: string = '';
-
 
   parse(): void {
     tokenizer.get_and_check_next('PRINT');
     tokenizer.get_and_check_next('->\\s*{');
 
     while (!tokenizer.check_next_token('}')) {
-
       if (tokenizer.check_next_token('REPEAT')) {
         let repeat: REPEAT = new REPEAT();
         repeat.parse();
@@ -40,7 +37,7 @@ class PRINT extends STATEMENT {
     this.sections = this.section_names.map(section_name => {
       return section_name.map(s => {
         return NODE.sections.get(s);
-      });
+      })
     });
 
     this.xml += '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n';
@@ -53,30 +50,30 @@ class PRINT extends STATEMENT {
     this.xml += NODE.title;
 
     this.xml += '<part-list>\n';
-    for (let i = 0; i < this.sections.length; i++) {
-      this.xml += `<score-part id="${i}">\n`;
-      this.xml += `<part-name>${i}</part-name>\n`;
-      this.xml += '</score-part>\n';
-    }
+    this.xml += `<score-part id="1">\n`;
+    this.xml += `<part-name>1</part-name>\n`;
+    this.xml += '</score-part>\n';
     this.xml += '</part-list>\n';
+
+    this.xml += '<part id="1">\n';
 
     for (let i = 0; i < this.sections.length; i++) {
       this.xml += this.merge_sections(this.sections[i], i);
     }
 
+    this.xml += '</part>\n';
+
     this.xml += '</score-partwise>\n';
   }
 
-  merge_sections(sections: Array<SECTION>, index: number): string {
+  merge_sections(sections: Array < SECTION >, index: number): string {
     let xml: string = '';
-
-    xml += `<part id="${index}">\n`;
 
     sections = sections.sort((section1, section2) => {
       return section1.get_clef().get_comparator() - section2.get_clef().get_comparator();
     });
 
-    let measures = sections.map((section) => {
+    let measures = sections.map(section => {
       return section.get_xml().match(/<measure.*>([\s\S]*?)<\/measure>/g);
     });
 
@@ -84,7 +81,7 @@ class PRINT extends STATEMENT {
     for (let i = 0; i < measures[0].length; i++) {
       xml += `<measure number="${i}">\n`;
 
-      if (i === 0) {
+      if (index === 0) {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
         xml += sections[0].get_key().get_xml();
@@ -117,6 +114,7 @@ class PRINT extends STATEMENT {
             return note;
         });
 
+
         for (let note of notes) {
           if (last_duration) {
             xml += '<backup>\n';
@@ -137,8 +135,6 @@ class PRINT extends STATEMENT {
 
       xml += '</measure>\n';
     }
-
-    xml += '</part>\n';
 
     return xml;
   }
