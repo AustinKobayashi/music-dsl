@@ -2,7 +2,7 @@ TITLE Game of Thrones (Intro)
 
 treble <- {
   CLEF Treble
-  KEY F major
+  KEY F, major
   TEMPO Andantino
   TIME 3/4
 
