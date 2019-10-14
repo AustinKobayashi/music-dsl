@@ -6,10 +6,11 @@ import CLEF, { CLEF_TOKEN } from "./CLEF";
 import KEY, { KEY_TOKEN } from "./KEY";
 import NODE from "~/plugins/NODE";
 import SECTION from "~/plugins/SECTION";
+import REPEAT from "~/plugins/REPEAT";
 
 class PRINT extends STATEMENT {
 
-    section_names: Array<Array<string> > = [];
+    section_names: Array<Array<string>> = [];
     sections: Array<Array<SECTION>> = [];
 
     xml: string = '';
@@ -22,9 +23,9 @@ class PRINT extends STATEMENT {
         while(!tokenizer.check_next_token('}')) {
 
             if(tokenizer.check_next_token('REPEAT')) {
-                // repeat
-                throw new Error('Not implemented yet');
-
+                let repeat: REPEAT = new REPEAT();
+                repeat.parse();
+                this.section_names = this.section_names.concat(repeat.get_sections());
             } else {
                 let stacked = [];
                 while(!tokenizer.check_next_token('!!!')) {
@@ -56,16 +57,18 @@ class PRINT extends STATEMENT {
         this.xml += '</work>\n';
 
         this.xml += '<part-list>\n';
-        for (let i = 0; i < this.sections.length; i++) {
-            this.xml += `<score-part id="${i}">\n`;
-            this.xml += `<part-name>${i}</part-name>\n`;
-            this.xml += '</score-part>\n';
-        }
+        this.xml += `<score-part id="1">\n`;
+        this.xml += `<part-name>1</part-name>\n`;
+        this.xml += '</score-part>\n';
         this.xml += '</part-list>\n';
+
+        this.xml += '<part id="1">\n';
 
         for (let i = 0; i < this.sections.length; i++) {
             this.xml += this.merge_sections(this.sections[i], i);
         }
+
+        this.xml += '</part>\n';
 
         this.xml += '</score-partwise>\n';
     }
@@ -73,8 +76,6 @@ class PRINT extends STATEMENT {
 
     merge_sections(sections: Array<SECTION>, index: number): string {
         let xml: string = '';
-
-        xml += `<part id="${index}">\n`;
 
         sections = sections.sort((section1, section2) => {
             return section1.get_clef().get_comparator() - section2.get_clef().get_comparator();
@@ -88,7 +89,7 @@ class PRINT extends STATEMENT {
         for (let i = 0; i < measures[0].length; i++) {
             xml += `<measure number="${i}">\n`;
 
-            if (i === 0) {
+            if (index === 0) {
                 xml += '<attributes>\n';
                 xml += '<divisions>128</divisions>\n';
                 xml += sections[0].get_key().get_xml();
@@ -143,8 +144,6 @@ class PRINT extends STATEMENT {
 
             xml += '</measure>\n';
         }
-
-        xml += '</part>\n';
 
         return xml;
     }
