@@ -4,6 +4,9 @@ import NODE from "~/plugins/NODE";
 import SECTION from "~/plugins/SECTION";
 import REPEAT from "~/plugins/REPEAT";
 
+var prev_clef = null
+var prev_time = null
+
 class PRINT extends STATEMENT {
 
   section_names: Array<Array<string>> = [];
@@ -58,7 +61,7 @@ class PRINT extends STATEMENT {
     this.xml += '<part id="1">\n';
 
     for (let i = 0; i < this.sections.length; i++) {
-      this.xml += this.merge_sections(this.sections[i], i);
+      let prev_signature = this.xml += this.merge_sections(this.sections[i], i);
     }
 
     this.xml += '</part>\n';
@@ -81,9 +84,6 @@ class PRINT extends STATEMENT {
     for (let i = 0; i < measures[0].length; i++) {
       xml += `<measure number="${i}">\n`;
 
-      let prev_clef = null
-      let prev_time = null
-
       if (i === 0) {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
@@ -92,6 +92,10 @@ class PRINT extends STATEMENT {
         let curr_clef = sections[0].get_clef();
 
         if (prev_time !== curr_time) {
+          console.log('time changed')
+          console.log(prev_time)
+          console.log(curr_time);
+          
           prev_time = curr_time;
           xml += curr_time.get_xml()
         }
