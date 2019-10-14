@@ -19,15 +19,16 @@ class NOTE extends STATEMENT {
         let token: string = tokenizer.get_next_token();
         token = token.replace(/\s+/g,'');
         this.token_length = token.length;
-        
+
         this.pitch = token.charAt(0);
-        
-        if (this.token_length === 2) 
-        this.octave = parseInt(token.charAt(1), 10);
-        
-        if (this.token_length === 3) {
+        if (token.length === 3)
+        {
             this.modifier = token.charAt(1);
             this.octave = parseInt(token.charAt(2), 10);
+        }
+        else if (token.length === 2)
+        {
+            this.octave = parseInt(token.charAt(1));
         }
     }
 
@@ -54,11 +55,11 @@ class NOTE extends STATEMENT {
 
         this.xml += '</note>\n';
     }
-    
+
     support_check(): void {
         throw new Error("Method not implemented.");
     }
-    
+
     name_check(): void {
     }
 

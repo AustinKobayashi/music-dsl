@@ -75,11 +75,8 @@ class tokenizer {
         return this.is_quality(this.tokens[this.pointer + 1]);
     }
 
-
-
-
     private static is_note (note: string): boolean {
-        return RegExp('[(A-Z)|(a-z)]\\d(\\s*#|\\s*b)?', 'g').test(note);
+        return RegExp('[(A-Z)|(a-z)](\\s*#|\\s*b)?\\d', 'g').test(note);
     }
 
 
