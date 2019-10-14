@@ -90,29 +90,24 @@ class PRINT extends STATEMENT {
 
         let curr_time = sections[0].get_time();
         let curr_clef = sections[0].get_clef();
-        
-        if (prev_clef !== curr_clef){
-          prev_clef = curr_clef;
-          let clef = sections[0].get_clef().get_xml();
-          clef = clef.replace('<clef>\n', `<clef number="${index + 1}">\n`);
-          xml += clef;
-        }
 
         if (prev_time !== curr_time) {
           prev_time = curr_time;
           xml += curr_time.get_xml()
         }
 
-
         xml += sections[i].get_key().get_xml();
-        // xml += sections[index].get_time().get_xml();
         xml += `<staves>${sections.length}</staves>\n`;
 
-        // for (let clef_index = 0; clef_index < sections.length; clef_index++) {
-        //   let clef = sections[clef_index].get_clef().get_xml();
-        //   clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
-        //   xml += clef;
-        // }
+        for (let clef_index = 0; clef_index < sections.length; clef_index++) {
+          curr_clef = sections[clef_index].get_clef()
+          if (prev_clef !== curr_clef){
+            prev_clef = curr_clef;
+            let clef = curr_clef.get_xml();
+            clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
+            xml += clef;
+          }
+        }
 
         xml += '</attributes>\n';
       }
