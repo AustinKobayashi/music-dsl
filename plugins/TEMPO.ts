@@ -17,7 +17,7 @@ class TEMPO extends STATEMENT {
   evaluate(): void {
     this.xml = '<direction directive="yes" placement="above">\n<direction-type>\n<words default-y="15" font-size="10.5" font-weight="bold">'
       + this.tempoString +
-      '</words>\n</direction-type>\n<staff>1</staff>\n<sound tempo="60"/>\n</direction>';
+      '</words>\n</direction-type>\n<staff>1</staff>\n<sound tempo="60"/>\n</direction>\n';
   }
 
   get_xml(): string {
