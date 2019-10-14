@@ -46,13 +46,13 @@ class PRINT extends STATEMENT {
 
         this.xml += '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n';
         this.xml += '<!DOCTYPE score-partwise PUBLIC\n' +
-            '    "-//Recordare//DTD MusicXML 3.1 Partwise//EN"\n' +
+            '    "-//Recordare//DTD Music XML 3.1 Partwise//EN"\n' +
             '    "http://www.musicxml.org/dtds/partwise.dtd">\n';
 
         this.xml += '<score-partwise version="3.1">\n';
 
         this.xml += '<work>\n';
-        this.xml += '<work-title>Winterreise</work-title>\n';
+        this.xml += '<work-title>Untitled</work-title>\n';
         this.xml += '</work>\n';
 
         this.xml += '<part-list>\n';
@@ -102,7 +102,8 @@ class PRINT extends STATEMENT {
 
             for (let measure_index = 0; measure_index < measures.length; measure_index++) {
                 let measure = measures[measure_index][i];
-                let notes = measure.match(/<note.*>([\s\S]*?)<\/note>/g);
+                // let notes = measure.match(/<note.*>([\s\S]*?)<\/note>/g);
+                let notes = measure.match(/(<note.*>([\s\S]*?)<\/note>)|(<direction.*>([\s\S]*?)<\/direction>)/g);
                 notes = notes.map(note => {
                     return note.replace('</voice>\n', `</voice>\n<staff>${measure_index + 1}</staff>\n`);
                 });

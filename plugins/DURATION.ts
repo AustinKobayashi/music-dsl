@@ -24,8 +24,8 @@ class DURATION extends STATEMENT {
     }
 
     evaluate(): void {
-        this.xml = '<type>' + this.type + '</type>\n';
-        this.xml = '<duration>' + this.durations[this.type] + '</duration>\n';
+        this.xml += '<type>' + this.type + '</type>\n';
+        this.xml += '<duration>' + this.durations[this.type] + '</duration>\n';
     }
     
     support_check(): void {
