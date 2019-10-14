@@ -1,0 +1,26 @@
+TITLE Gran Vals
+
+treble <- {
+  CLEF Treble
+  KEY A major
+  TEMPO Andantino
+  TIME 3/4
+
+  E6, eighth
+  D6, eighth
+  F5, quarter
+  G5, quarter
+  C6, eighth
+  B6, eighth
+  D5, quarter
+  E5, quarter
+  B6, eighth
+  A6, eighth
+  C5, quarter
+  E5, quarter
+  A5, dotted-half
+}
+
+PRINT -> {
+  REPEAT treble, 4
+}

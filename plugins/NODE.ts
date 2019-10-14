@@ -17,10 +17,10 @@ abstract class NODE {
 
     abstract parse(): void;
     abstract evaluate(): void;
-    abstract support_check(): void;
-    abstract name_check(): void;
-    abstract duration_check(): void;
     abstract clef_check(): void;  // to check if stacked sections in print are different clefs
+    abstract duration_check(): void;
+    abstract name_check(): void;
+    abstract support_check(): void;
 
     abstract get_xml(): string;
 }

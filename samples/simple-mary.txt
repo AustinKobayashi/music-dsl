@@ -1,0 +1,38 @@
+TITLE Mary Had a Little Lamb
+
+song <- {
+  CLEF Treble
+  KEY C major
+  TEMPO Moderate
+  TIME 4/4
+
+  E4, quarter
+  D4, quarter
+  C4, quarter
+  D4, quarter
+  E4, quarter
+  E4, quarter
+  E4, half
+  D4, quarter
+  D4, quarter
+  D4, half
+  E4, quarter
+  G4, quarter
+  G4, half
+  E4, quarter
+  D4, quarter
+  C4, quarter
+  D4, quarter
+  E4, quarter
+  E4, quarter
+  E4, half
+  D4, quarter
+  D4, quarter
+  E4, quarter
+  D4, quarter
+  C4, whole
+}
+
+PRINT -> {
+  song
+}

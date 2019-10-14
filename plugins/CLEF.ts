@@ -7,9 +7,9 @@ export const SUPPORTED_CLEF = ["Treble", "Alto", "Bass"];
 class CLEF extends STATEMENT {
 
   clef: string;
-  xml: string;
-  sign: string;
   line: number;
+  sign: string;
+  xml: string;
 
   comparator = {
     'Alto': 0,
@@ -20,6 +20,7 @@ class CLEF extends STATEMENT {
   parse(): void {
     tokenizer.get_and_check_next(CLEF_TOKEN);
     this.clef = tokenizer.get_next_token();
+    this.support_check();
   }
 
   evaluate(): void {
@@ -27,7 +28,7 @@ class CLEF extends STATEMENT {
       this.sign = "G";
       this.line = 2;
     }
-    
+
     if (this.clef === "Alto") {
       this.sign = "C";
       this.line = 3;
@@ -42,29 +43,25 @@ class CLEF extends STATEMENT {
   }
 
   support_check(): void {
-    if (SUPPORTED_CLEF.indexOf(this.clef) < 0) {
+    if (SUPPORTED_CLEF.indexOf(this.clef) < 0)
       throw new Error(`Clef ${this.clef} is not supported.`);
-    }
   }
 
-  name_check(): void {
-    throw new Error("Method not implemented.");
-  }
-
-  duration_check(): void {
-    throw new Error("Method not implemented.");
+  get_comparator(): number {
+    return this.comparator[this.clef];
   }
 
   get_xml() {
     return this.xml;
   }
 
-  clef_check(): void {
-  }
+  // not used
+  clef_check(): void { }
 
-  get_comparator(): number {
-    return this.comparator[this.clef];
-  }
+  duration_check(): void { }
+
+  name_check(): void { }
+
 }
 
 export default CLEF;

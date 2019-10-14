@@ -1,0 +1,57 @@
+TITLE Game of Thrones (Intro)
+
+treble <- {
+  CLEF Treble
+  KEY F major
+  TEMPO Andantino
+  TIME 3/4
+
+  D4, A4, dotted-half
+  D4, dotted-half
+  F4, eighth
+  G4, eighth
+  A4, half
+  D4, half
+  F4, eighth
+  G4, eighth
+  E4, dotted-half
+  E4, dotted-half
+  C4, E4, quarter
+  A4, quarter
+  C4, eighth
+  D4, eighth
+  E4, quarter
+  A4, quarter
+  C4, quarter
+  C4, G4, dotted-half
+  C4, dotted-half
+  F4, eighth
+  E4, eighth
+  G4, half
+  C4, dotted-half
+  F4, eighth
+  E4, eighth
+  D4, half
+  D4, dotted-half
+  D5, quarter
+  G4, quarter
+  B5, eighth
+  C5, eighth
+  D5, quarter
+  G4, quarter
+  B5, quarter
+  A4, dotted-half
+  C4, dotted-half
+  F4, eighth
+  E4, eighth
+  G4, half
+  C4, dotted-half
+  F4, eighth
+  E4, eighth
+  D4, half
+  D4, dotted-half
+}
+
+PRINT -> {
+  treble
+}
