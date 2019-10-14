@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@nuxtjs/pwa": "^2.6.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "file-api": "^0.10.4"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.2.10",

@@ -32,6 +32,9 @@ class QUALITY extends STATEMENT {
   // xml built in KEY
   get_xml(): string { return null; }
 
+    clef_check(): void {
+    }
+
 }
 
 export default QUALITY;

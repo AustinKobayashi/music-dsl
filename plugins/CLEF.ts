@@ -11,6 +11,12 @@ class CLEF extends STATEMENT {
   sign: string;
   line: number;
 
+  comparator = {
+    'Alto': 0,
+    'Treble': 1,
+    'Bass': 2
+  };
+
   parse(): void {
     tokenizer.get_and_check_next(CLEF_TOKEN);
     this.clef = tokenizer.get_next_token();
@@ -51,6 +57,13 @@ class CLEF extends STATEMENT {
 
   get_xml() {
     return this.xml;
+  }
+
+  clef_check(): void {
+  }
+
+  get_comparator(): number {
+    return this.comparator[this.clef];
   }
 }
 
