@@ -1,6 +1,7 @@
 import STATEMENT from './STATEMENT';
 import tokenizer from './tokenizer';
 import PROGRAM from "./PROGRAM";
+import NODE from "~/plugins/NODE";
 
 export const TITLE_TOKEN: string = 'TITLE';
 
@@ -15,8 +16,8 @@ class TITLE extends STATEMENT {
   }  
 
   evaluate(): void {
-    this.xml = `<work><work-title>${this.title}</work-title></work>`;
-    PROGRAM.xml.set(TITLE_TOKEN, this.xml);
+    this.xml = `<work>\n<work-title>${this.title}</work-title>\n</work>\n`;
+    NODE.title = this.xml;
   }
   
   support_check(): void {}

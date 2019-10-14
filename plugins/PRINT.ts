@@ -51,9 +51,7 @@ class PRINT extends STATEMENT {
 
         this.xml += '<score-partwise version="3.1">\n';
 
-        this.xml += '<work>\n';
-        this.xml += '<work-title>Untitled</work-title>\n';
-        this.xml += '</work>\n';
+        this.xml += NODE.title;
 
         this.xml += '<part-list>\n';
         for (let i = 0; i < this.sections.length; i++) {
