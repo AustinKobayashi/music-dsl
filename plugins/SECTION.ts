@@ -63,7 +63,7 @@ class SECTION extends STATEMENT {
        this.create_new_measure(measure_number ++);
 
        while (i < this.chords.length) {
-           if (measure_duration === 128 * 4) { //TODO: this assumes 4/4, fix to allow other time signatures
+           if (measure_duration === 128 * this.time.get_beats()) { //TODO: this assumes 4/4, fix to allow other time signatures
                this.xml += '</measure>\n';
                this.create_new_measure(measure_number ++);
                measure_duration = 0;
@@ -78,7 +78,7 @@ class SECTION extends STATEMENT {
            i++;
        }
 
-       if (measure_duration !== 128 * 4)
+       if (measure_duration !== 128 * this.time.get_beats())
            throw new Error('Invalid durations');
 
        this.xml += '</measure>\n';
