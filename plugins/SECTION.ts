@@ -9,144 +9,143 @@ import NODE from "~/plugins/NODE";
 
 class SECTION extends STATEMENT {
 
-   name: string;
-   chords: Array<CHORD> = [];
-   clef: CLEF;
-   key: KEY;
-   tempo: TEMPO;
-   time: TIME;
+  chords: Array<CHORD> = [];
+  clef: CLEF;
+  key: KEY;
+  name: string;
+  tempo: TEMPO;
+  time: TIME;
+  total_duration: number = 0;
+  xml: string = '';
 
-   total_duration: number = 0;
+  parse(): void {
+    this.name = tokenizer.get_next_token();
+    tokenizer.get_and_check_next('<-\\s*{');
 
-   xml: string = '';
-
-
-   parse(): void {
-
-       this.name = tokenizer.get_next_token();
-       tokenizer.get_and_check_next('<-\\s*{');
-
-       while(!tokenizer.check_next_token('}')) {
-           console.log(tokenizer.get_cur_token());
-           if(tokenizer.check_next_token(CLEF_TOKEN)) {
-               this.clef = new CLEF();
-               this.clef.parse();
-            } else if(tokenizer.check_next_token(KEY_TOKEN)) {
-                // key
-                this.key = new KEY();
-                this.key.parse();
-            } else if(tokenizer.check_next_token(TIME_TOKEN)) {
-                // time
-                this.time = new TIME();
-                this.time.parse();
-            } else if(tokenizer.check_next_token(TEMPO_TOKEN)) {
-                // tempo
-               this.tempo = new TEMPO();
-               this.tempo.parse();
-            } else if(tokenizer.is_next_token_note() || tokenizer.is_next_token_rest()) {
-                let chord: CHORD = new CHORD();
-                chord.parse();
-                this.chords.push(chord);
-
-            } else { throw new Error('Invalid Section'); }
-       }
-       tokenizer.get_next_token();
-   }
-
-    evaluate(): void {
-       let measure_number = 0;
-       let measure_duration = 0;
-       let i = 0;
-
-       this.xml += `<part id="${this.name}">\n`;
-
-       this.create_new_measure(measure_number ++);
-
-       while (i < this.chords.length) {
-           if (measure_duration === 128 * this.time.get_beats()) { //TODO: this assumes 4/4, fix to allow other time signatures
-               this.xml += '</measure>\n';
-               this.create_new_measure(measure_number ++);
-               measure_duration = 0;
-           } else if (measure_duration > 128 * 4) {
-               throw new Error('Invalid durations');
-           }
-
-           this.chords[i].evaluate();
-           this.xml += this.chords[i].get_xml();
-           measure_duration += this.chords[i].get_duration();
-           this.total_duration += this.chords[i].get_duration();
-           i++;
-       }
-
-       if (measure_duration !== 128 * this.time.get_beats())
-           throw new Error('Invalid durations');
-
-       this.xml += '</measure>\n';
-       this.xml += '</part>\n';
-       NODE.section_names.push(this.name);
-
-       NODE.section_durations.set(this.name, this.total_duration);
-
-       NODE.xml.set(this.name, this.xml);
-       NODE.sections.set(this.name, this);
+    while (!tokenizer.check_next_token('}')) {
+      console.log(tokenizer.get_cur_token());
+      if (tokenizer.check_next_token(CLEF_TOKEN)) {
+        this.clef = new CLEF();
+        this.clef.parse();
+      }
+      // key
+      else if (tokenizer.check_next_token(KEY_TOKEN)) {
+        this.key = new KEY();
+        this.key.parse();
+      }
+      // time
+      else if (tokenizer.check_next_token(TIME_TOKEN)) {
+        this.time = new TIME();
+        this.time.parse();
+      }
+      // tempo
+      else if (tokenizer.check_next_token(TEMPO_TOKEN)) {
+        this.tempo = new TEMPO();
+        this.tempo.parse();
+      }
+      // chord
+      else if (tokenizer.is_next_token_note() || tokenizer.is_next_token_rest()) {
+        let chord: CHORD = new CHORD();
+        chord.parse();
+        this.chords.push(chord);
+      }
+      else {
+        throw new Error('Invalid Section');
+      }
     }
 
+    tokenizer.get_next_token();
+  }
 
-    create_new_measure (measure_number: number) {
-        this.xml += `<measure number = "${measure_number}">\n`;
+  evaluate(): void {
+    let measure_number = 0;
+    let measure_duration = 0;
+    let i = 0;
 
-        if (this.tempo && measure_number === 0) {
-            this.tempo.evaluate();
-            this.xml += this.tempo.get_xml();
-        }
+    this.xml += `<part id="${this.name}">\n`;
 
-        this.xml += '<attributes>\n';
-        this.xml += '<divisions>128</divisions>\n';
+    this.create_new_measure(measure_number++);
 
-        this.key.evaluate();
-        this.xml += this.key.get_xml();
+    while (i < this.chords.length) {
+      if (measure_duration === 128 * this.time.get_beats()) {
+        this.xml += '</measure>\n';
+        this.create_new_measure(measure_number++);
+        measure_duration = 0;
+      } else if (measure_duration > 128 * this.time.get_beats()) {
+        throw new Error('Invalid durations');
+      }
 
-        this.time.evaluate();
-        this.xml += this.time.get_xml();
-
-        this.clef.evaluate();
-        this.xml += this.clef.get_xml();
-        this.xml += '</attributes>\n';
+      this.chords[i].evaluate();
+      this.xml += this.chords[i].get_xml();
+      measure_duration += this.chords[i].get_duration();
+      this.total_duration += this.chords[i].get_duration();
+      i++;
     }
 
+    if (measure_duration !== 128 * this.time.get_beats())
+      throw new Error('Invalid durations');
 
-    support_check(): void {
-        throw new Error("Method not implemented.");
+    this.xml += '</measure>\n';
+    this.xml += '</part>\n';
+    NODE.section_names.push(this.name);
+
+    NODE.section_durations.set(this.name, this.total_duration);
+
+    NODE.xml.set(this.name, this.xml);
+    NODE.sections.set(this.name, this);
+  }
+
+  create_new_measure(measure_number: number) {
+    this.xml += `<measure number = "${measure_number}">\n`;
+
+    if (this.tempo && measure_number === 0) {
+      this.tempo.evaluate();
+      this.xml += this.tempo.get_xml();
     }
 
-    name_check(): void {
-    }
+    this.xml += '<attributes>\n';
+    this.xml += '<divisions>128</divisions>\n';
 
-    duration_check(): void {
-    }
+    this.key.evaluate();
+    this.xml += this.key.get_xml();
 
-    get_xml(): string {
-        return this.xml;
-    }
+    this.time.evaluate();
+    this.xml += this.time.get_xml();
 
-    get_total_duration(): number {
-       return this.total_duration;
-    }
+    this.clef.evaluate();
+    this.xml += this.clef.get_xml();
+    this.xml += '</attributes>\n';
+  }
 
-    get_key(): KEY {
-       return this.key;
-    }
+  get_clef(): CLEF {
+    return this.clef;
+  }
 
-    get_time(): TIME {
-        return this.time;
-    }
+  get_key(): KEY {
+    return this.key;
+  }
 
-    get_clef(): CLEF {
-        return this.clef;
-    }
+  get_time(): TIME {
+    return this.time;
+  }
 
-    clef_check(): void {
-    }
+  get_total_duration(): number {
+    return this.total_duration;
+  }
+
+  get_xml(): string {
+    return this.xml;
+  }
+
+  // not used
+  clef_check(): void { }
+
+  duration_check(): void { }
+
+  name_check(): void { }
+
+  support_check(): void { }
+
 }
 
 export default SECTION;

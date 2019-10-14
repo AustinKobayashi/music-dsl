@@ -27,16 +27,14 @@ class CLEF extends STATEMENT {
     if (this.clef === "Treble") {
       this.sign = "G";
       this.line = 2;
-    }
-
-    if (this.clef === "Alto") {
+    } else if (this.clef === "Alto") {
       this.sign = "C";
       this.line = 3;
-    }
-
-    if (this.clef === "Bass") {
+    } else if (this.clef === "Bass") {
       this.sign = "F";
       this.line = 4;
+    } else {
+      throw new Error("Invalid CLEF: " + this.clef);
     }
 
     this.xml = `<clef>\n<sign>${this.sign}</sign>\n<line>${this.line}</line>\n</clef>\n`;

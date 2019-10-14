@@ -1,0 +1,21 @@
+TITLE D Major Scale
+
+scale <- {
+  CLEF Treble
+  KEY C, major
+  TEMPO Moderate
+  TIME 4/4
+
+  D4, quarter
+  E4, quarter
+  F#4, quarter
+  G4, quarter
+  A4, quarter
+  B4, quarter
+  C#5, quarter
+  D5, quarter
+}
+
+PRINT -> {
+  scale
+}

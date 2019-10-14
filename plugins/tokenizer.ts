@@ -7,7 +7,7 @@ const durations = ['whole', 'dotted-half', 'half', 'dotted-quarter', 'quarter', 
 
 const dynamics = ['ppp', 'pp', 'p', 'mp', 'mf', 'fp', 'fz', 'rf', 'rfz', 'sf', 'f', 'ff', 'fff'];
 
-const literals = ['TITLE', '<-{', '<- {', '}', 'CLEF', 'KEY', 'major', 'minor', 'TIME', '/', 'TEMPO', 'PRINT', 'REPEAT'];
+const literals = ['TITLE', '<-{', '<- {', '}', 'CLEF', 'KEY', 'TIME', '/', 'TEMPO', 'PRINT', 'REPEAT'];
 
 class tokenizer {
 
@@ -79,7 +79,7 @@ class tokenizer {
   public static is_next_token_articulation(): boolean {
     return this.is_articulation(this.tokens[this.pointer + 1]);
   }
-  
+
     public static is_next_token_rest (): boolean {
         return RegExp('REST', 'g').test(this.tokens[this.pointer + 1]);
     }
