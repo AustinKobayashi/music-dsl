@@ -81,18 +81,36 @@ class PRINT extends STATEMENT {
     for (let i = 0; i < measures[0].length; i++) {
       xml += `<measure number="${i}">\n`;
 
-      if (index === 0) {
+      let prev_clef = null
+      let prev_time = null
+
+      if (i === 0) {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
-        xml += sections[0].get_key().get_xml();
-        xml += sections[0].get_time().get_xml();
-        xml += `<staves>${sections.length}</staves>\n`;
 
-        for (let clef_index = 0; clef_index < sections.length; clef_index++) {
-          let clef = sections[clef_index].get_clef().get_xml();
-          clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
+        let curr_time = sections[index].get_time();
+        let curr_clef = sections[index].get_clef();
+        
+        if (prev_clef !== curr_clef){
+          let clef = sections[index].get_clef().get_xml();
+          clef = clef.replace('<clef>\n', `<clef number="${index + 1}">\n`);
           xml += clef;
         }
+
+        if (prev_time !== curr_time) {
+          xml += curr_time.get_xml()
+        }
+
+
+        xml += sections[i].get_key().get_xml();
+        // xml += sections[index].get_time().get_xml();
+        xml += `<staves>${sections.length}</staves>\n`;
+
+        // for (let clef_index = 0; clef_index < sections.length; clef_index++) {
+        //   let clef = sections[clef_index].get_clef().get_xml();
+        //   clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
+        //   xml += clef;
+        // }
 
         xml += '</attributes>\n';
       }
