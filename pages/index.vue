@@ -2,10 +2,7 @@
   <div id="container">
     <b-modal ref="example-modal" hide-footer title="Example" size="xl">
       <div id="modal-content">
-        <div id="modal-text">
-          <p>a</p>
-        </div>
-        <img>
+        <img id="example-img" src="/example.png" />
       </div>
     </b-modal>
     <b-modal id="ebnf-modal" ref="ebnf-modal" hide-footer title="EBNF" size="lg">
@@ -150,6 +147,10 @@ p {
 
 #ebnf-modal {
     font-size: 1rem;
+}
+
+#example-img {
+  width: 100%;
 }
 
 #top-bar {
