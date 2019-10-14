@@ -94,7 +94,7 @@ class tokenizer {
   }
 
   public static is_next_token_note(): boolean {
-    return RegExp('[(A-Z)|(a-z)]\\d(\\s*#|\\s*b)?', 'g').test(this.tokens[this.pointer + 1]);
+    return RegExp('[(A-Z)|(a-z)](\\s*#|\\s*b)?\\d', 'g').test(this.tokens[this.pointer + 1]);
   }
 
   // main

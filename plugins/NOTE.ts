@@ -18,12 +18,13 @@ class NOTE extends STATEMENT {
     this.token_length = token.length;
 
     this.pitch = token.charAt(0);
+    console.log("note length: " + this.token_length.toString());
     if (token.length === 3) {
       this.modifier = token.charAt(1);
       this.octave = parseInt(token.charAt(2), 10);
     }
     else if (token.length === 2)
-      this.octave = parseInt(token.charAt(1));
+      this.octave = parseInt(token.charAt(1), 10);
   }
 
   evaluate(): void {
@@ -34,11 +35,18 @@ class NOTE extends STATEMENT {
 
     this.xml += '<pitch>\n';
     this.xml += '<step>' + this.pitch + '</step>\n';
+    if (this.modifier === '#')
+    {
+      this.xml += '<alter>1</alter>'
+    }
+    if (this.modifier === 'b')
+    {
+      this.xml += '<alter>-1</alter>'
+    }
     this.xml += '<octave>' + this.octave + '</octave>\n';
     this.xml += '</pitch>\n';
     this.xml += this.duration;
     this.xml += '<voice>1</voice>\n';
-
     if (this.modifier === '#')
       this.xml += '<accidental>sharp</accidental>\n';
     if (this.modifier === 'b')
@@ -75,7 +83,7 @@ class NOTE extends STATEMENT {
     if (this.token_length === 3)
       return `${this.pitch}${this.modifier}${this.octave}`;
   }
-  
+
   // not used
   clef_check(): void { }
 
