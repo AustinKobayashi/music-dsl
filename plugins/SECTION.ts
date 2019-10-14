@@ -106,6 +106,9 @@ class SECTION extends STATEMENT {
         this.clef.evaluate();
         this.xml += this.clef.get_xml();
         this.xml += '</attributes>\n';
+
+        this.tempo.evaluate();
+        this.xml += this.tempo.get_xml();
     }
 
 
