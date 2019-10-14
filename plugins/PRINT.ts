@@ -92,10 +92,6 @@ class PRINT extends STATEMENT {
         let curr_clef = sections[0].get_clef();
 
         if (prev_time !== curr_time) {
-          console.log('time changed')
-          console.log(prev_time)
-          console.log(curr_time);
-          
           prev_time = curr_time;
           xml += curr_time.get_xml()
         }
