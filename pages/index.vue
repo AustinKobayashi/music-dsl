@@ -1,9 +1,49 @@
 <template>
   <div id="container">
-    <div id="editor">
-      <textarea id="input-area" v-model="user_input" @change="generate_music" />
+    <b-modal ref="example-modal" hide-footer title="Example" size="xl">
+      <div id="modal-content">
+        <div id="modal-text">
+          <p>a</p>
+        </div>
+        <img>
+      </div>
+    </b-modal>
+    <b-modal id="ebnf-modal" ref="ebnf-modal" hide-footer title="EBNF" size="lg">
+      <p>PROGRAM  ::= TITLE SECTION* PRINT</p>
+      <p>PRINT ::= “ -> ” “{“ [REPEAT, (SECTION (“,” SECTION)*)]+ “}”</p>
+      <p>TITLE ::= “TITLE” STRING</p>
+      <p>SECTION ::= STRING “ <- ” “{“ CLEF KEY TIME TEMPO CHORD+ “}”</p>
+      <p>REPEAT ::= “REPEAT” SECTION (“, ” SECTION)* INTEGER</p>
+      <p>CLEF ::= [“Treble”, “Bass”, “Alto”]</p>
+      <p>KEY ::= NOTE QUALITY</p>
+      <p>TIME ::= [1-9]+ / 2k, k > 0</p>
+      <p>TEMPO ::= “TEMPO” STRING</p>
+      <p>CHORD ::= NOTE (“, ” NOTE)* “, ” DURATION (“, “ DYNAMIC)? (“, ” ARTICULATION)*</p>
+      <p>NOTE ::= [“C”, “D”, “E”, “F”, “G”, “A”, “B”] MODIFIER? [0-9]</p>
+      <p>MODIFIER ::= [“#”, “b”]</p>
+      <p>QUALITY ::= [“major”, “minor”]</p>
+      <p>ARTICULATION ::= ["staccato", "tenuto", "marcato", "accent", "begin slur", "end slur"]</p>
+      <p>
+        DYNAMIC ::= ["ppp", "pp", "p", "mp", "mf", "fp", "fz", "rf", "rfz", "sf", "f", "ff", "fff", "begin crescendo",
+        "end crescendo", "begin decrescendo", "end decrescendo",
+        "begin diminuendo", "end diminuendo"]
+      </p>
+      <p>DURATION ::= ["whole", "half", "quarter", "eighth", "sixteenth", "thirty-second", "sixty-fourth", "hundred twenty-eighth"]</p>
+    </b-modal>
+    <div id="top-bar">
+      <button type="button" class="btn btn-primary" @click="show_example_modal">
+        Example
+      </button>
+      <button type="button" class="btn btn-secondary" @click="show_ebnf_modal">
+        ENBF
+      </button>
     </div>
-    <div id="osmdCanvas" />
+    <div id="content">
+      <div id="editor">
+        <textarea id="input-area" v-model="user_input" @change="generate_music" />
+      </div>
+      <div id="osmdCanvas" />
+    </div>
   </div>
 </template>
 
@@ -16,7 +56,9 @@ export default {
   data() {
     return {
       openSheetMusicDisplay: undefined,
-      user_input: ''
+      user_input: '',
+      example_modal: false,
+      ebnf_modal: false
     }
   },
   mounted() {
@@ -75,24 +117,58 @@ export default {
             console.error(e)
           }
         )
+    },
+    show_example_modal() {
+      this.$refs['example-modal'].show()
+    },
+    hide_example_modal() {
+      this.$refs['example-modal'].hide()
+    },
+    show_ebnf_modal() {
+      this.$refs['ebnf-modal'].show()
+    },
+    hide_ebnf_modal() {
+      this.$refs['ebnf-modal'].hide()
     }
   }
 }
 </script>
 
 <style>
+button {
+    margin-right: 5px;
+}
+
+p {
+    margin-bottom: 0.5rem;
+}
+
 #container {
-  display: flex;
-  min-height: 100vh;
+    margin-left: 10px;
+    min-height: 100vh;
+}
+
+#ebnf-modal {
+    font-size: 1rem;
+}
+
+#top-bar {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#content,
+#top-bar {
+    display: flex;
 }
 
 #input-area {
-  min-height: 100vh;
-  width: 30vw;
-  font-size: 1rem;
+    min-height: 92vh;
+    width: 30vw;
+    font-size: 1rem;
 }
 
 #osmdCanvas {
-  width: 70vw;
+    width: 70vw;
 }
 </style>

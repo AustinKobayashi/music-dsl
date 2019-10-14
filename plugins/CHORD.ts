@@ -14,8 +14,27 @@ class CHORD extends STATEMENT {
 
     xml: string = '';
 
+    is_rest: boolean;
+
+
     // needs a loop of sorts
     parse(): void {
+        if (tokenizer.is_next_token_note())
+            this.parse_chord();
+        else
+            this.parse_rest();
+    }
+
+    parse_rest(): void {
+        tokenizer.get_and_check_next('REST');
+        this.duration = new DURATION();
+        this.duration.parse();
+
+        this.is_rest = true;
+    }
+
+
+    parse_chord(): void {
         let note: NOTE = new NOTE();
         note.parse();
         this.notes.push(note);
@@ -26,7 +45,7 @@ class CHORD extends STATEMENT {
             this.notes.push(note);
         }
 
-        while(!tokenizer.check_next_token('}') && !tokenizer.is_next_token_note()) {
+        while(!tokenizer.check_next_token('}') && !tokenizer.is_next_token_note() && !tokenizer.is_next_token_rest()) {
             if (tokenizer.is_next_token_duration()) {
                 // duration
                 this.duration = new DURATION();
@@ -48,7 +67,26 @@ class CHORD extends STATEMENT {
         }
     }
 
-    evaluate(): void {
+    evaluate (): void {
+        if(!this.is_rest)
+            this.evaluate_chord();
+        else
+            this.evaluate_rest();
+    }
+
+
+    evaluate_rest (): void {
+        this.duration.evaluate();
+
+        this.xml += '<note>\n';
+        this.xml += '<rest/>\n';
+        this.xml += this.duration.get_xml();
+        this.xml += '</note>\n';
+
+    }
+
+
+    evaluate_chord (): void {
         this.duration.evaluate();
 
         if (this.dynamic) {

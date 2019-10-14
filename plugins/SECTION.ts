@@ -25,7 +25,7 @@ class SECTION extends STATEMENT {
        tokenizer.get_and_check_next('<-\\s*{');
        
        while(!tokenizer.check_next_token('}')) {
-           
+           console.log(tokenizer.get_cur_token());
            if(tokenizer.check_next_token(CLEF_TOKEN)) {
                this.clef = new CLEF();
                this.clef.parse();
@@ -41,7 +41,7 @@ class SECTION extends STATEMENT {
                 // tempo
                 throw new Error('Tempo Not Implemented Yet');
 
-            } else if(tokenizer.is_next_token_note()) {
+            } else if(tokenizer.is_next_token_note() || tokenizer.is_next_token_rest()) {
                 let chord: CHORD = new CHORD();
                 chord.parse();
                 this.chords.push(chord);

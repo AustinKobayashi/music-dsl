@@ -10,6 +10,7 @@ class NOTE extends STATEMENT {
     articulation: string;
 
     is_chord: boolean;
+    is_rest: boolean;
 
     token_length: number;
 
@@ -32,7 +33,7 @@ class NOTE extends STATEMENT {
     }
 
     evaluate(): void {
-        this.xml += '<note default-x="26">\n';
+        this.xml += '<note>\n';
 
         if (this.is_chord)
             this.xml += '<chord/>\n';

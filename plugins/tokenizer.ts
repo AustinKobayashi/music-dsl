@@ -58,6 +58,10 @@ class tokenizer {
         return RegExp('[(A-Z)|(a-z)]\\d(\\s*#|\\s*b)?', 'g').test(this.tokens[this.pointer + 1]);
     }
 
+    public static is_next_token_rest (): boolean {
+        return RegExp('REST', 'g').test(this.tokens[this.pointer + 1]);
+    }
+
     public static is_next_token_duration(): boolean {
         return this.is_duration(this.tokens[this.pointer + 1]);
     }
