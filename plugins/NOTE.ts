@@ -3,14 +3,19 @@ import tokenizer from "~/plugins/tokenizer";
 
 class NOTE extends STATEMENT {
 
-  articulation: string;
-  duration: string;
-  is_chord: boolean;
-  modifier: string;
-  octave: number;
-  pitch: string;
-  token_length: number;
-  xml: string = '';
+    pitch: string;
+    octave: number;
+    modifier: string;
+    duration: string;
+    articulation: string;
+
+    is_chord: boolean;
+    is_rest: boolean;
+
+    token_length: number;
+
+    xml: string = '';
+
 
   parse(): void {
     let token: string = tokenizer.get_next_token();
@@ -27,72 +32,67 @@ class NOTE extends STATEMENT {
       this.octave = parseInt(token.charAt(1), 10);
   }
 
-  evaluate(): void {
-    this.xml += '<note default-x="26">\n';
+    evaluate(): void {
+        this.xml += '<note>\n';
 
-    if (this.is_chord)
-      this.xml += '<chord/>\n';
+        if (this.is_chord)
+            this.xml += '<chord/>\n';
 
-    this.xml += '<pitch>\n';
-    this.xml += '<step>' + this.pitch + '</step>\n';
-    if (this.modifier === '#')
-    {
-      this.xml += '<alter>1</alter>'
+        this.xml += '<pitch>\n';
+        this.xml += '<step>' + this.pitch + '</step>\n';
+        this.xml += '<octave>' + this.octave + '</octave>\n';
+        this.xml += '</pitch>\n';
+        this.xml += this.duration;
+        this.xml += '<voice>1</voice>\n';
+
+        if (this.modifier === '#')
+            this.xml += '<accidental>sharp</accidental>\n';
+        if (this.modifier === 'b')
+            this.xml += '<accidental>flat</accidental>\n';
+
+        if (this.articulation)
+            this.xml += this.articulation;
+
+        this.xml += '</note>\n';
     }
-    if (this.modifier === 'b')
-    {
-      this.xml += '<alter>-1</alter>'
+    
+    support_check(): void {
+        throw new Error("Method not implemented.");
     }
-    this.xml += '<octave>' + this.octave + '</octave>\n';
-    this.xml += '</pitch>\n';
-    this.xml += this.duration;
-    this.xml += '<voice>1</voice>\n';
-    if (this.modifier === '#')
-      this.xml += '<accidental>sharp</accidental>\n';
-    if (this.modifier === 'b')
-      this.xml += '<accidental>flat</accidental>\n';
+    
+    name_check(): void {
+    }
 
-    if (this.articulation)
-      this.xml += this.articulation;
+    duration_check(): void {
+    }
 
-    this.xml += '</note>\n';
-  }
+    to_string(): string {
+        if (this.token_length === 1)
+            return `${this.pitch}`;
+        if (this.token_length === 2)
+            return `${this.pitch}${this.octave}`;
+        if (this.token_length === 3)
+            return `${this.pitch}${this.modifier}${this.octave}`;
+    }
 
-  get_xml(): string {
-    return this.xml;
-  }
+    get_xml(): string {
+        return this.xml;
+    }
 
-  set_articulation(articulation: string) {
-    this.articulation = articulation;
-  }
+    set_duration(duration: string) {
+        this.duration = duration;
+    }
 
-  set_duration(duration: string) {
-    this.duration = duration;
-  }
+    set_is_chord(is_chord: boolean) {
+        this.is_chord = is_chord;
+    }
 
-  set_is_chord(is_chord: boolean) {
-    this.is_chord = is_chord;
-  }
+    set_articulation(articulation: string) {
+        this.articulation = articulation;
+    }
 
-  // return note for building xml in KEY
-  to_string(): string {
-    if (this.token_length === 1)
-      return `${this.pitch}`;
-    if (this.token_length === 2)
-      return `${this.pitch}${this.octave}`;
-    if (this.token_length === 3)
-      return `${this.pitch}${this.modifier}${this.octave}`;
-  }
-
-  // not used
-  clef_check(): void { }
-
-  duration_check(): void { }
-
-  name_check(): void { }
-
-  support_check(): void { }
-
+    clef_check(): void {
+    }
 }
 
 export default NOTE;

@@ -79,6 +79,10 @@ class tokenizer {
   public static is_next_token_articulation(): boolean {
     return this.is_articulation(this.tokens[this.pointer + 1]);
   }
+  
+    public static is_next_token_rest (): boolean {
+        return RegExp('REST', 'g').test(this.tokens[this.pointer + 1]);
+    }
 
   public static is_next_token_duration(): boolean {
     return this.is_duration(this.tokens[this.pointer + 1]);

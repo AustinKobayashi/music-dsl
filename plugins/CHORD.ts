@@ -7,88 +7,130 @@ import ARTICULATION from "~/plugins/ARTICULATION";
 
 class CHORD extends STATEMENT {
 
-  articulation: ARTICULATION;
-  duration: DURATION;
-  dynamic: DYNAMIC;
-  notes: Array<NOTE> = [];
+    notes: Array<NOTE> = [];
+    dynamic: DYNAMIC;
+    duration: DURATION;
+    articulation: ARTICULATION;
 
-  xml: string = '';
+    xml: string = '';
 
-  parse(): void {
-    let note: NOTE = new NOTE();
-    note.parse();
-    this.notes.push(note);
+    is_rest: boolean;
 
-    while (tokenizer.is_next_token_note()) {
-      let note: NOTE = new NOTE();
-      note.parse();
-      this.notes.push(note);
+
+    // needs a loop of sorts
+    parse(): void {
+        if (tokenizer.is_next_token_note())
+            this.parse_chord();
+        else
+            this.parse_rest();
     }
 
-    while (!tokenizer.check_next_token('}') && !tokenizer.is_next_token_note()) {
-      if (tokenizer.is_next_token_duration()) {
-        // duration
+    parse_rest(): void {
+        tokenizer.get_and_check_next('REST');
         this.duration = new DURATION();
         this.duration.parse();
 
-      } else if (tokenizer.is_next_token_articulation()) {
-        // articulation
-        this.articulation = new ARTICULATION();
-        this.articulation.parse();
-
-      } else if (tokenizer.is_next_token_dynamic()) {
-        this.dynamic = new DYNAMIC();
-        this.dynamic.parse();
-
-      } else if (!tokenizer.check_token('}')) {
-        // console.log(tokenizer.get_cur_token());
-        throw new Error('Invalid chord');
-      }
-    }
-  }
-
-  evaluate(): void {
-    this.duration.evaluate();
-
-    if (this.dynamic) {
-      this.dynamic.evaluate();
-      this.xml += this.dynamic.get_xml();
+        this.is_rest = true;
     }
 
-    if (this.articulation)
-      this.articulation.evaluate();
 
-    for (let i = 0; i < this.notes.length; i++) {
-      if (i > 0)
-        this.notes[i].set_is_chord(true);
+    parse_chord(): void {
+        let note: NOTE = new NOTE();
+        note.parse();
+        this.notes.push(note);
 
-      this.notes[i].set_duration(this.duration.get_xml());
+        while (tokenizer.is_next_token_note()) {
+            let note: NOTE = new NOTE();
+            note.parse();
+            this.notes.push(note);
+        }
 
-      if (this.articulation)
-        this.notes[i].set_articulation(this.articulation.get_xml());
+        while(!tokenizer.check_next_token('}') && !tokenizer.is_next_token_note() && !tokenizer.is_next_token_rest()) {
+            if (tokenizer.is_next_token_duration()) {
+                // duration
+                this.duration = new DURATION();
+                this.duration.parse();
 
-      this.notes[i].evaluate();
-      this.xml += this.notes[i].get_xml();
+            } else if (tokenizer.is_next_token_articulation()) {
+                // articulation
+                this.articulation = new ARTICULATION();
+                this.articulation.parse();
+
+            } else if (tokenizer.is_next_token_dynamic()) {
+                this.dynamic = new DYNAMIC();
+                this.dynamic.parse();
+
+            } else if (!tokenizer.check_token('}')){
+                // console.log(tokenizer.get_cur_token());
+                throw new Error('Invalid chord');
+            }
+        }
     }
-  }
 
-  get_xml(): string {
-    return this.xml;
-  }
+    evaluate (): void {
+        if(!this.is_rest)
+            this.evaluate_chord();
+        else
+            this.evaluate_rest();
+    }
 
-  get_duration(): number {
-    return this.duration.get_duration();
-  }
 
-  // not used
-  clef_check(): void { }
+    evaluate_rest (): void {
+        this.duration.evaluate();
 
-  duration_check(): void { }
+        this.xml += '<note>\n';
+        this.xml += '<rest/>\n';
+        this.xml += this.duration.get_xml();
+        this.xml += '</note>\n';
 
-  name_check(): void { }
+    }
 
-  support_check(): void { }
 
+    evaluate_chord (): void {
+        this.duration.evaluate();
+
+        if (this.dynamic) {
+            this.dynamic.evaluate();
+            this.xml += this.dynamic.get_xml();
+        }
+
+        if (this.articulation)
+            this.articulation.evaluate();
+
+        for (let i = 0; i < this.notes.length; i++) {
+            if (i > 0) {
+                this.notes[i].set_is_chord(true);
+            }
+            this.notes[i].set_duration(this.duration.get_xml());
+
+            if (this.articulation)
+                this.notes[i].set_articulation(this.articulation.get_xml());
+
+            this.notes[i].evaluate();
+            this.xml += this.notes[i].get_xml();
+        }
+    }
+
+    support_check(): void {
+        throw new Error("Method not implemented.");
+    }
+    
+    name_check(): void {
+    }
+
+    duration_check(): void {
+    }
+
+    get_xml(): string {
+        return this.xml;
+    }
+
+    get_duration(): number {
+        return this.duration.get_duration();
+    }
+
+    clef_check(): void {
+    }
 }
 
 export default CHORD;

@@ -33,8 +33,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/pwa'
-    // '@nuxtjs/eslint-module'
+    '@nuxtjs/pwa',
+    'bootstrap-vue/nuxt'
   ],
   /*
   ** Build configuration
