@@ -32,7 +32,7 @@ class NOTE extends STATEMENT {
     }
 
     evaluate(): void {
-        this.xml += '<note>\n';
+        this.xml += '<note default-x="26">\n';
 
         if (this.is_chord)
             this.xml += '<chord/>\n';

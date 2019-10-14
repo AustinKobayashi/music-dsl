@@ -84,33 +84,60 @@ class PRINT extends STATEMENT {
             return section.get_xml().match(/<measure.*>([\s\S]*?)<\/measure>/g);
         });
 
+
         for (let i = 0; i < measures[0].length; i++) {
             xml += `<measure number="${i}">\n`;
-            xml += '<attributes>\n';
-            xml += '<divisions>128</divisions>\n';
-            xml += sections[0].get_key().get_xml();
-            xml += sections[0].get_time().get_xml();
-            xml += `<staves>${sections.length}</staves>\n`;
 
-            for (let clef_index = 0; clef_index < sections.length; clef_index++){
-                let clef = sections[clef_index].get_clef().get_xml();
-                clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
-                xml += clef;
+            if (i === 0) {
+                xml += '<attributes>\n';
+                xml += '<divisions>128</divisions>\n';
+                xml += sections[0].get_key().get_xml();
+                xml += sections[0].get_time().get_xml();
+                xml += `<staves>${sections.length}</staves>\n`;
+
+                for (let clef_index = 0; clef_index < sections.length; clef_index++) {
+                    let clef = sections[clef_index].get_clef().get_xml();
+                    clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
+                    xml += clef;
+                }
+
+                xml += '</attributes>\n';
             }
 
-            xml += '</attributes>\n';
+            let last_duration = undefined;
 
             for (let measure_index = 0; measure_index < measures.length; measure_index++) {
                 let measure = measures[measure_index][i];
+
                 // let notes = measure.match(/<note.*>([\s\S]*?)<\/note>/g);
                 let notes = measure.match(/(<note.*>([\s\S]*?)<\/note>)|(<direction.*>([\s\S]*?)<\/direction>)/g);
                 notes = notes.map(note => {
-                    return note.replace('</voice>\n', `</voice>\n<staff>${measure_index + 1}</staff>\n`);
+                    let voices = note.match(/<voice.*>([\s\S]*?)<\/voice>/g);
+                    if (voices) {
+                        let voice = voices[0];
+                        note.replace(voice, `<voice>${measure_index + 1}</voice>`);
+                        return note.replace('</voice>\n', `</voice>\n<staff>${measure_index + 1}</staff>\n`);
+                    } else
+                        return note;
                 });
 
+
                 for (let note of notes) {
+
+                    if (last_duration) {
+                        xml += '<backup>\n';
+                        xml += `<duration>${last_duration}</duration>\n`;
+                        xml += '</backup>\n';
+                    }
+
                     xml += note;
                     xml += '\n';
+
+                    let durations = note.match(/<duration>\d+<\/duration>/g);
+                    if (durations) {
+                        let duration = durations[0];
+                        last_duration = duration.match(/\d+/g)[0];
+                    }
                 }
             }
 

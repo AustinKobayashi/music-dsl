@@ -87,7 +87,6 @@ class SECTION extends STATEMENT {
 
        NODE.xml.set(this.name, this.xml);
        NODE.sections.set(this.name, this);
-       console.log(this.xml);
     }
 
 
