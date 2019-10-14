@@ -1,3 +1,5 @@
+import SECTION from "~/plugins/SECTION";
+
 abstract class NODE {
 
     // For name check
@@ -9,12 +11,14 @@ abstract class NODE {
     // For PRINT to print these parts x number of times and in specific order
     public static xml: Map<string, string> = new Map();
 
+    public static sections: Map<string, SECTION> = new Map();
 
     abstract parse(): void;
     abstract evaluate(): void;
     abstract support_check(): void;
     abstract name_check(): void;
     abstract duration_check(): void;
+    abstract clef_check(): void;  // to check if stacked sections in print are different clefs
 
     abstract get_xml(): string;
 }

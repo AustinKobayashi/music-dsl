@@ -27,7 +27,6 @@ class CHORD extends STATEMENT {
         }
 
         while(!tokenizer.check_next_token('}') && !tokenizer.is_next_token_note()) {
-
             if (tokenizer.is_next_token_duration()) {
                 // duration
                 this.duration = new DURATION();
@@ -90,6 +89,9 @@ class CHORD extends STATEMENT {
 
     get_duration(): number {
         return this.duration.get_duration();
+    }
+
+    clef_check(): void {
     }
 }
 

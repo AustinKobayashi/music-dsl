@@ -24,8 +24,8 @@ class DURATION extends STATEMENT {
     }
 
     evaluate(): void {
-        this.xml = '<type>' + this.type + '</type>\n';
-        this.xml = '<duration>' + this.durations[this.type] + '</duration>\n';
+        this.xml += '<type>' + this.type + '</type>\n';
+        this.xml += '<duration>' + this.durations[this.type] + '</duration>\n';
     }
     
     support_check(): void {
@@ -44,6 +44,9 @@ class DURATION extends STATEMENT {
 
     get_duration(): number {
         return this.durations[this.type];
+    }
+
+    clef_check(): void {
     }
 }
 

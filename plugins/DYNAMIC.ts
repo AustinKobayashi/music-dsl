@@ -21,9 +21,17 @@ class DYNAMIC extends STATEMENT {
             this.xml += '</dynamics>\n';
         } else if (tokenizer.is_direction(this.dynamic)) {
             if (this.dynamic.includes('begin')) {
-                this.xml += '<wedge type="' + this.dynamic.replace('begin', '').trim() + '"/>';
+                if (this.dynamic.includes('crescendo'))
+                    this.xml += '<wedge spread="0" type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
+                if (this.dynamic.includes('diminuendo'))
+                    this.xml += '<wedge type="' + this.dynamic.replace('begin', '').trim() + '"/>\n';
+
             } else if (this.dynamic.includes('end')) {
-                this.xml += '<wedge spread="15" type="stop"/>';
+                if (this.dynamic.includes('crescendo'))
+                    this.xml += '<wedge spread="15" type="stop"/>\n';
+                if (this.dynamic.includes('diminuendo'))
+                    this.xml += '<wedge type="stop"/>\n';
+
             }
         } else {
             throw new Error('Invalid dynamic');
@@ -45,6 +53,9 @@ class DYNAMIC extends STATEMENT {
     
     get_xml(): string {
         return this.xml;
+    }
+
+    clef_check(): void {
     }
 }
 

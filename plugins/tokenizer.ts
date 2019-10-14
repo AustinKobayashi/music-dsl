@@ -40,7 +40,7 @@ class tokenizer {
     }
 
 
-    private static get_cur_token (): string {
+    public static get_cur_token (): string {
         return this.tokens[this.pointer];
     }
 
@@ -49,7 +49,7 @@ class tokenizer {
         if (this.tokens.length < 3)
             throw new Error('Not enough tokens');
 
-        return this.pointer !== this.tokens.length;
+        return this.pointer !== this.tokens.length - 1;
     }
 
 
@@ -111,6 +111,16 @@ class tokenizer {
 
         let token_str = user_input;
         let repeats: Array<string> = token_str.match(/REPEAT.*/g) || [];
+
+        let print = token_str.match(/PRINT(.|\s)*}/g)[0];
+        if (print) {
+            let parts = print.split('\n');
+            for (let i = 1; i < parts.length - 1; i++) {
+                parts[i] = parts[i] + ', !!!';
+            }
+            let new_print = parts.join('\n');
+            token_str = token_str.replace(print, new_print);
+        }
 
         for (let repeat of repeats) {
             let repeat_substr = repeat.match(/\s+\d+/g)[0];
