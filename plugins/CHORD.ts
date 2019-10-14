@@ -61,8 +61,7 @@ class CHORD extends STATEMENT {
                 this.dynamic.parse();
 
             } else if (!tokenizer.check_token('}')){
-                // console.log(tokenizer.get_cur_token());
-                throw new Error('Invalid chord');
+                throw new Error('Invalid chord, unexpected symbol: ' + tokenizer.get_next_token());
             }
         }
     }
@@ -114,7 +113,7 @@ class CHORD extends STATEMENT {
     support_check(): void {
         throw new Error("Method not implemented.");
     }
-    
+
     name_check(): void {
     }
 

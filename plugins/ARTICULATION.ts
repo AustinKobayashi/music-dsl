@@ -19,7 +19,7 @@ class ARTICULATION extends STATEMENT {
       } else if (this.articulation.includes('end')) {
         this.xml += '<slur number="1" type="stop"/>\n';
       } else {
-        throw new Error('Invalid articulation');
+        throw new Error('Invalid articulation: ' + this.articulation);
       }
 
     } else {

@@ -55,7 +55,6 @@ class KEY extends STATEMENT {
     tokenizer.get_and_check_next(KEY_TOKEN);
     this.note = new NOTE();
     this.note.parse();
-    //this.quality = tokenizer.get_next_token();
     this.quality = new QUALITY();
     this.quality.parse();
   }
