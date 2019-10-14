@@ -25,7 +25,9 @@ class QUALITY extends STATEMENT {
   }
 
   // return supported quality for building xml in KEY
-  to_string(): string { return this.quality; }
+  to_string(): string {
+    return this.quality;
+  }
 
   // not used
   clef_check(): void {}
