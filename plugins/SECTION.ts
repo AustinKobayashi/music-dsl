@@ -95,7 +95,7 @@ class SECTION extends STATEMENT {
     create_new_measure (measure_number: number) {
         this.xml += `<measure number = "${measure_number}">\n`;
 
-        if (this.tempo) {
+        if (this.tempo && measure_number === 0) {
             this.tempo.evaluate();
             this.xml += this.tempo.get_xml();
         }
