@@ -81,7 +81,7 @@ class PRINT extends STATEMENT {
     for (let i = 0; i < measures[0].length; i++) {
       xml += `<measure number="${i}">\n`;
 
-      if (i === 0) {
+      if (index === 0) {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
         xml += sections[0].get_key().get_xml();
