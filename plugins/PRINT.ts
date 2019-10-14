@@ -4,6 +4,9 @@ import NODE from "~/plugins/NODE";
 import SECTION from "~/plugins/SECTION";
 import REPEAT from "~/plugins/REPEAT";
 
+var prev_clef = null
+var prev_time = null
+
 class PRINT extends STATEMENT {
 
   section_names: Array<Array<string>> = [];
@@ -58,7 +61,7 @@ class PRINT extends STATEMENT {
     this.xml += '<part id="1">\n';
 
     for (let i = 0; i < this.sections.length; i++) {
-      this.xml += this.merge_sections(this.sections[i], i);
+      let prev_signature = this.xml += this.merge_sections(this.sections[i], i);
     }
 
     this.xml += '</part>\n';
@@ -81,36 +84,30 @@ class PRINT extends STATEMENT {
     for (let i = 0; i < measures[0].length; i++) {
       xml += `<measure number="${i}">\n`;
 
-      let prev_clef = null
-      let prev_time = null
-
       if (i === 0) {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
 
-        let curr_time = sections[index].get_time();
-        let curr_clef = sections[index].get_clef();
-        
-        if (prev_clef !== curr_clef){
-          let clef = sections[index].get_clef().get_xml();
-          clef = clef.replace('<clef>\n', `<clef number="${index + 1}">\n`);
-          xml += clef;
-        }
+        let curr_time = sections[0].get_time();
+        let curr_clef = sections[0].get_clef();
 
         if (prev_time !== curr_time) {
+          prev_time = curr_time;
           xml += curr_time.get_xml()
         }
 
-
         xml += sections[i].get_key().get_xml();
-        // xml += sections[index].get_time().get_xml();
         xml += `<staves>${sections.length}</staves>\n`;
 
-        // for (let clef_index = 0; clef_index < sections.length; clef_index++) {
-        //   let clef = sections[clef_index].get_clef().get_xml();
-        //   clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
-        //   xml += clef;
-        // }
+        for (let clef_index = 0; clef_index < sections.length; clef_index++) {
+          curr_clef = sections[clef_index].get_clef()
+          if (prev_clef !== curr_clef){
+            prev_clef = curr_clef;
+            let clef = curr_clef.get_xml();
+            clef = clef.replace('<clef>\n', `<clef number="${clef_index + 1}">\n`);
+            xml += clef;
+          }
+        }
 
         xml += '</attributes>\n';
       }
