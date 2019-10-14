@@ -43,6 +43,7 @@ class ARTICULATION extends STATEMENT {
 
   // checked in tokenizer
   support_check(): void { }
+
 }
 
 export default ARTICULATION;

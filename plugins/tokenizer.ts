@@ -3,7 +3,7 @@ const articulations = ['staccato', 'tenuto', 'marcato', 'accent', 'begin slur', 
 const directions = ['begin crescendo', 'end crescendo', 'begin decrescendo', 'end decrescendo',
   'begin diminuendo', 'end diminuendo'];
 
-const durations = ['whole', 'half', 'quarter', 'eighth', 'sixteenth', 'thirty-second', 'sixty-fourth', 'hundred twenty-eighth'];
+const durations = ['whole', 'dotted-half', 'half', 'dotted-quarter', 'quarter', 'dotted-eighth', 'eighth', 'dotted-16th', '16th', 'dotted-32nd', '32nd', 'dotted-64th', '64th', 'dotted-128th', '128th'];
 
 const dynamics = ['ppp', 'pp', 'p', 'mp', 'mf', 'fp', 'fz', 'rf', 'rfz', 'sf', 'f', 'ff', 'fff'];
 

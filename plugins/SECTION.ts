@@ -9,15 +9,13 @@ import NODE from "~/plugins/NODE";
 
 class SECTION extends STATEMENT {
 
-  name: string;
   chords: Array<CHORD> = [];
   clef: CLEF;
   key: KEY;
-  time: TIME;
+  name: string;
   tempo: TEMPO;
-
+  time: TIME;
   total_duration: number = 0;
-
   xml: string = '';
 
   parse(): void {
@@ -25,26 +23,32 @@ class SECTION extends STATEMENT {
     tokenizer.get_and_check_next('<-\\s*{');
 
     while (!tokenizer.check_next_token('}')) {
-
       if (tokenizer.check_next_token(CLEF_TOKEN)) {
         this.clef = new CLEF();
         this.clef.parse();
-      } else if (tokenizer.check_next_token(KEY_TOKEN)) {
-        // key
+      }
+      // key
+      else if (tokenizer.check_next_token(KEY_TOKEN)) {
         this.key = new KEY();
         this.key.parse();
-      } else if (tokenizer.check_next_token(TIME_TOKEN)) {
-        // time
+      }
+      // time
+      else if (tokenizer.check_next_token(TIME_TOKEN)) {
         this.time = new TIME();
         this.time.parse();
-      } else if (tokenizer.check_next_token(TEMPO_TOKEN)) {
+      }
+      // tempo
+      else if (tokenizer.check_next_token(TEMPO_TOKEN)) {
         this.tempo = new TEMPO();
         this.tempo.parse();
-      } else if (tokenizer.is_next_token_note()) {
+      }
+      // chords
+      else if (tokenizer.is_next_token_note()) {
         let chord: CHORD = new CHORD();
         chord.parse();
         this.chords.push(chord);
-      } else {
+      }
+      else {
         throw new Error('Invalid Section');
       }
     }
@@ -53,7 +57,7 @@ class SECTION extends STATEMENT {
   }
 
   evaluate(): void {
-    let measure_number = 0;
+    let measure_number = 1; // TODO
     let measure_duration = 0;
     let i = 0;
 
@@ -62,7 +66,7 @@ class SECTION extends STATEMENT {
     this.create_new_measure(measure_number++);
 
     while (i < this.chords.length) {
-      if (measure_duration === 128 * 4) { //TODO: this assumes 4/4, fix to allow other time signatures
+      if (measure_duration === 128 * this.time.get_beats()) {
         this.xml += '</measure>\n';
         this.create_new_measure(measure_number++);
         measure_duration = 0;
@@ -77,7 +81,7 @@ class SECTION extends STATEMENT {
       i++;
     }
 
-    if (measure_duration !== 128 * 4)
+    if (measure_duration !== 128 * this.time.get_beats())
       throw new Error('Invalid durations');
 
     this.xml += '</measure>\n';
@@ -106,8 +110,11 @@ class SECTION extends STATEMENT {
     this.xml += this.clef.get_xml();
     this.xml += '</attributes>\n';
 
-    this.tempo.evaluate();
-    this.xml += this.tempo.get_xml();
+    if (this.tempo) {
+      this.tempo.evaluate();
+      this.xml += this.tempo.get_xml();
+      this.tempo = undefined;
+    }
   }
 
 

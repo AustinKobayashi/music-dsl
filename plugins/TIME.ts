@@ -25,6 +25,11 @@ class TIME extends STATEMENT {
       throw new Error(`Beat Type ${this.beatType} is not even`);
   }
 
+  // called in SECTION to dynamically set measure duration 
+  get_beats(): number {
+    return this.beats;
+  }
+
   get_xml(): string {
     return this.xml;
   }
