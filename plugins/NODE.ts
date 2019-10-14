@@ -4,7 +4,7 @@ abstract class NODE {
     public static section_names: Array<string> = [];
 
     // For duration check
-    public static section_durations: Map<string, string> = new Map();
+    public static section_durations: Map<string, number> = new Map();
 
     // For PRINT to print these parts x number of times and in specific order
     public static xml: Map<string, string> = new Map();
