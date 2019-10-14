@@ -59,8 +59,6 @@ class SECTION extends STATEMENT {
        let i = 0;
 
        this.xml += `<part id="${this.name}">\n`;
-        this.tempo.evaluate();
-        this.xml += this.tempo.get_xml();
 
        this.create_new_measure(measure_number ++);
 
@@ -96,6 +94,11 @@ class SECTION extends STATEMENT {
 
     create_new_measure (measure_number: number) {
         this.xml += `<measure number = "${measure_number}">\n`;
+
+        if (this.tempo && measure_number === 0) {
+            this.tempo.evaluate();
+            this.xml += this.tempo.get_xml();
+        }
 
         this.xml += '<attributes>\n';
         this.xml += '<divisions>128</divisions>\n';
