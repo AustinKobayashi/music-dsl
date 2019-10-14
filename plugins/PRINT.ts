@@ -66,7 +66,7 @@ class PRINT extends STATEMENT {
     this.xml += '</score-partwise>\n';
   }
 
-  merge_sections(sections: Array < SECTION >, index: number): string {
+  merge_sections(sections: Array<SECTION>, index: number): string {
     let xml: string = '';
 
     sections = sections.sort((section1, section2) => {

@@ -1,53 +1,45 @@
 import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
 
-export const SUPPORTED_QUALITY = ["major", "minor"];
-
 class REPEAT extends STATEMENT {
 
-    sections: Array<string> = [];
-    count: number;
-    xml: string = '';
+  count: number;
+  sections: Array<string> = [];
+  xml: string = '';
 
-    parse(): void {
+  parse(): void {
+    tokenizer.get_and_check_next('REPEAT');
 
-        tokenizer.get_and_check_next('REPEAT');
-
-        while(!tokenizer.check_next_token('\\d+') && tokenizer.has_more_tokens()) {
-            this.sections.push(tokenizer.get_next_token());
-        }
-
-        this.count = parseInt(tokenizer.get_next_token(), 10);
-        tokenizer.get_and_check_next('!!!');
+    while (!tokenizer.check_next_token('\\d+') && tokenizer.has_more_tokens()) {
+      this.sections.push(tokenizer.get_next_token());
     }
 
-    // xml built in KEY
-    evaluate(): void {}
+    this.count = parseInt(tokenizer.get_next_token(), 10);
+    tokenizer.get_and_check_next('!!!');
+  }
 
-    // not used
-    duration_check(): void {}
+  evaluate(): void { }
 
-    // not used
-    name_check(): void {}
-
-    support_check(): void {
+  get_sections(): Array<Array<string>> {
+    let sections = [];
+    for (let i = 0; i < this.count; i++) {
+      sections.push(this.sections);
     }
+    return sections;
+  }
 
-    // xml built in KEY
-    get_xml(): string {
-        return this.get_xml();
-    }
+  get_xml(): string {
+    return this.xml;
+  }
 
-    get_sections(): Array<Array<string>> {
-        let sections = [];
-        for (let i = 0; i < this.count; i++) {
-            sections.push(this.sections);
-        }
-        return sections;
-    }
+  // not used
+  clef_check(): void { }
 
-    clef_check(): void {
-    }
+  duration_check(): void { }
+
+  name_check(): void { }
+
+  support_check(): void { }
 
 }
 
