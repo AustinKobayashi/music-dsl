@@ -59,15 +59,17 @@ class SECTION extends STATEMENT {
        let i = 0;
 
        this.xml += `<part id="${this.name}">\n`;
+        this.tempo.evaluate();
+        this.xml += this.tempo.get_xml();
 
        this.create_new_measure(measure_number ++);
 
        while (i < this.chords.length) {
-           if (measure_duration === 128 * 4) { //TODO: this assumes 4/4, fix to allow other time signatures
+           if (measure_duration === 128 * this.time.get_beats()) { //TODO: this assumes 4/4, fix to allow other time signatures
                this.xml += '</measure>\n';
                this.create_new_measure(measure_number ++);
                measure_duration = 0;
-           } else if (measure_duration > 128 * 4) {
+           } else if (measure_duration > 128 * this.time.get_beats()) {
                throw new Error('Invalid durations');
            }
 
@@ -78,7 +80,7 @@ class SECTION extends STATEMENT {
            i++;
        }
 
-       if (measure_duration !== 128 * 4)
+       if (measure_duration !== 128 * this.time.get_beats())
            throw new Error('Invalid durations');
 
        this.xml += '</measure>\n';
@@ -94,11 +96,6 @@ class SECTION extends STATEMENT {
 
     create_new_measure (measure_number: number) {
         this.xml += `<measure number = "${measure_number}">\n`;
-
-        if (this.tempo) {
-            this.tempo.evaluate();
-            this.xml += this.tempo.get_xml();
-        }
 
         this.xml += '<attributes>\n';
         this.xml += '<divisions>128</divisions>\n';
