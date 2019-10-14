@@ -1,8 +1,8 @@
 import STATEMENT from "~/plugins/STATEMENT";
 import tokenizer from "~/plugins/tokenizer";
-import CHORD from "~/plugins/CHORD";
 import NODE from "~/plugins/NODE";
 import SECTION from "~/plugins/SECTION";
+import REPEAT from "~/plugins/REPEAT";
 
 class PRINT extends STATEMENT {
 
@@ -19,8 +19,9 @@ class PRINT extends STATEMENT {
     while (!tokenizer.check_next_token('}')) {
 
       if (tokenizer.check_next_token('REPEAT')) {
-        // repeat
-        throw new Error('Not implemented yet');
+        let repeat: REPEAT = new REPEAT();
+        repeat.parse();
+        this.section_names = this.section_names.concat(repeat.get_sections());
 
       } else {
         let stacked = [];
