@@ -40,6 +40,10 @@ class NOTE extends STATEMENT {
 
         this.xml += '<pitch>\n';
         this.xml += '<step>' + this.pitch + '</step>\n';
+        if (this.modifier === '#')
+            this.xml += '<alter>1</alter>\n';
+        if (this.modifier === 'b')
+            this.xml += '<alter>-1</alter>\n';
         this.xml += '<octave>' + this.octave + '</octave>\n';
         this.xml += '</pitch>\n';
         this.xml += this.duration;
@@ -55,11 +59,11 @@ class NOTE extends STATEMENT {
 
         this.xml += '</note>\n';
     }
-    
+
     support_check(): void {
         throw new Error("Method not implemented.");
     }
-    
+
     name_check(): void {
     }
 
