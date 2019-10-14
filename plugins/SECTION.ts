@@ -39,11 +39,10 @@ class SECTION extends STATEMENT {
                 // time
                 this.time = new TIME();
                 this.time.parse();
-            } else if(tokenizer.check_next_token('TEMPO')) {
+            } else if(tokenizer.check_next_token(TEMPO_TOKEN)) {
                 // tempo
                this.tempo = new TEMPO();
                this.tempo.parse();
-
             } else if(tokenizer.is_next_token_note() || tokenizer.is_next_token_rest()) {
                 let chord: CHORD = new CHORD();
                 chord.parse();

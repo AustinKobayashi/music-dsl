@@ -23,7 +23,6 @@ class NOTE extends STATEMENT {
     this.token_length = token.length;
 
     this.pitch = token.charAt(0);
-    console.log("note length: " + this.token_length.toString());
     if (token.length === 3) {
       this.modifier = token.charAt(1);
       this.octave = parseInt(token.charAt(2), 10);
