@@ -4,6 +4,7 @@ import CHORD from "~/plugins/CHORD";
 import TIME, { TIME_TOKEN } from "./TIME";
 import CLEF, { CLEF_TOKEN } from "./CLEF";
 import KEY, { KEY_TOKEN } from "./KEY";
+import TEMPO, {TEMPO_TOKEN } from "./TEMPO";
 import NODE from "~/plugins/NODE";
 
 class SECTION extends STATEMENT {
@@ -13,6 +14,7 @@ class SECTION extends STATEMENT {
    clef: CLEF;
    key: KEY;
    time: TIME;
+   tempo: TEMPO;
 
    total_duration: number;
 
@@ -20,12 +22,12 @@ class SECTION extends STATEMENT {
 
 
    parse(): void {
-       
+
        this.name = tokenizer.get_next_token();
        tokenizer.get_and_check_next('<-\\s*{');
-       
+
        while(!tokenizer.check_next_token('}')) {
-           
+
            if(tokenizer.check_next_token(CLEF_TOKEN)) {
                this.clef = new CLEF();
                this.clef.parse();
@@ -37,10 +39,9 @@ class SECTION extends STATEMENT {
                 // time
                 this.time = new TIME();
                 this.time.parse();
-            } else if(tokenizer.check_next_token('TEMPO')) {
-                // tempo
-                throw new Error('Tempo Not Implemented Yet');
-
+            } else if(tokenizer.check_next_token(TEMPO_TOKEN)) {
+                this.tempo = new TEMPO();
+                this.tempo.parse();
             } else if(tokenizer.is_next_token_note()) {
                 let chord: CHORD = new CHORD();
                 chord.parse();
@@ -111,7 +112,7 @@ class SECTION extends STATEMENT {
     support_check(): void {
         throw new Error("Method not implemented.");
     }
-    
+
     name_check(): void {
     }
 
