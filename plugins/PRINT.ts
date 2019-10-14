@@ -88,16 +88,18 @@ class PRINT extends STATEMENT {
         xml += '<attributes>\n';
         xml += '<divisions>128</divisions>\n';
 
-        let curr_time = sections[index].get_time();
-        let curr_clef = sections[index].get_clef();
+        let curr_time = sections[0].get_time();
+        let curr_clef = sections[0].get_clef();
         
         if (prev_clef !== curr_clef){
-          let clef = sections[index].get_clef().get_xml();
+          prev_clef = curr_clef;
+          let clef = sections[0].get_clef().get_xml();
           clef = clef.replace('<clef>\n', `<clef number="${index + 1}">\n`);
           xml += clef;
         }
 
         if (prev_time !== curr_time) {
+          prev_time = curr_time;
           xml += curr_time.get_xml()
         }
 
