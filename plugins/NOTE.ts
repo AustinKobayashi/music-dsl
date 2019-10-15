@@ -29,6 +29,7 @@ class NOTE extends STATEMENT {
     }
     else if (token.length === 2)
       this.octave = parseInt(token.charAt(1), 10);
+    this.support_check();
   }
 
     evaluate(): void {
@@ -60,7 +61,7 @@ class NOTE extends STATEMENT {
     }
 
     support_check(): void {
-        throw new Error("Method not implemented.");
+        if (this.octave < 0 || this.octave
     }
 
     name_check(): void {
