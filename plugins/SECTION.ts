@@ -52,7 +52,7 @@ class SECTION extends STATEMENT {
       else {
         tokenizer.get_next_token()
         let first = tokenizer.get_cur_token().split(' ')[0]
-        throw new Error('Section not supported: '+first);
+        throw new Error('Section attribute not supported: '+first);
       }
     }
 
