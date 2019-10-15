@@ -50,4 +50,4 @@ Samples available in `samples` folder
 - [Bootstrap Vue](https://bootstrap-vue.js.org/) - Bootstrap v4 implementation for Vue.js
 
 ## Disclaimer
-music-dsl should be used for educational purposes only. No exceptions. Team "We Just Met" and developers will not be responsible or liable in any way for use of this project. no liability or responsibility is accepted by the developers and associates. user discretion is advised.
+`music-dsl` should be used for educational purposes only. No exceptions. Team "We Just Met" and developers will not be responsible or liable in any way for use of this project. No liability or responsibility is accepted by the developers and associates. User discretion is advised.
