@@ -1,0 +1,38 @@
+TITLE Scales
+
+scale-d <- {
+  CLEF Treble
+  KEY C, major
+  TEMPO Moderate
+  TIME 4/4
+
+  D4, quarter
+  E4, quarter
+  F#4, quarter
+  G4, quarter
+  A4, quarter
+  B4, quarter
+  C#5, quarter
+  D5, quarter
+}
+
+scale-Bb <- {
+  CLEF Treble
+  KEY C, major
+  TEMPO Moderate
+  TIME 4/4
+
+  Bb4, quarter
+  C5, quarter
+  D5, quarter
+  Eb5, quarter
+  F5, quarter
+  G5, quarter
+  A5, quarter
+  Bb5, quarter
+}
+
+PRINT -> {
+  scale-d
+  scale-Bb
+}

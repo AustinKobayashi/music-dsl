@@ -2,7 +2,7 @@ TITLE Gran Vals
 
 treble <- {
   CLEF Treble
-  KEY A major
+  KEY A, major
   TEMPO Andantino
   TIME 3/4
 

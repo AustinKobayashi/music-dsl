@@ -1,6 +1,6 @@
 TITLE Mary Had a Little Lamb
 
-song <- {
+treble <- {
   CLEF Treble
   KEY C, major
   TEMPO Moderate
@@ -10,29 +10,51 @@ song <- {
   D4, quarter
   C4, quarter
   D4, quarter
+
   E4, quarter
   E4, quarter
   E4, half
+
   D4, quarter
   D4, quarter
   D4, half
+
   E4, quarter
   G4, quarter
   G4, half
+
   E4, quarter
   D4, quarter
   C4, quarter
   D4, quarter
+
   E4, quarter
   E4, quarter
   E4, half
+
   D4, quarter
   D4, quarter
   E4, quarter
   D4, quarter
+
   C4, whole
 }
 
+bass <- {
+  CLEF Bass
+  KEY C, major
+  TIME 4/4
+
+  C3, G3, whole
+  C3, G3, whole
+  F3, G3, whole
+  C3, G3, whole
+  C3, G3, whole
+  C3, G3, whole
+  F3, G3, whole
+  C3, G3, whole
+}
+
 PRINT -> {
-  song
+  treble, bass
 }
