@@ -1,8 +1,8 @@
 {
-  "name": "nuxt-music",
+  "name": "music-xml",
   "version": "1.0.0",
-  "description": "My dazzling Nuxt.js project",
-  "author": "Austin Kobayashi",
+  "description": "UBC CPSC 410 domain-specific language project",
+  "author": "We Just Met",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
