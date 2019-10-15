@@ -3,7 +3,7 @@ import tokenizer from "~/plugins/tokenizer";
 
 class NOTE extends STATEMENT {
 
-    pitch: string;
+    pitchClass: string;
     octave: number;
     modifier: string;
     duration: string;
@@ -22,7 +22,7 @@ class NOTE extends STATEMENT {
     token = token.replace(/\s+/g, '');
     this.token_length = token.length;
 
-    this.pitch = token.charAt(0);
+    this.pitchClass = token.charAt(0);
     if (token.length === 3) {
       this.modifier = token.charAt(1);
       this.octave = parseInt(token.charAt(2), 10);
@@ -39,7 +39,7 @@ class NOTE extends STATEMENT {
             this.xml += '<chord/>\n';
 
         this.xml += '<pitch>\n';
-        this.xml += '<step>' + this.pitch + '</step>\n';
+        this.xml += '<step>' + this.pitchClass + '</step>\n';
         if (this.modifier === '#')
             this.xml += '<alter>1</alter>\n';
         if (this.modifier === 'b')
@@ -61,7 +61,18 @@ class NOTE extends STATEMENT {
     }
 
     support_check(): void {
-        if (this.octave < 0 || this.octave
+        if (this.pitchClass < 'A' || this.pitchClass > 'G')
+        {
+            throw new Error("Pitch Class not supported: " + this.pitchClass);
+        }
+        if (typeof this.octave !== "undefined" && this.octave < 0 || this.octave > 9)
+        {
+            throw new Error("Octave number not supported: " + this.octave);
+        }
+        if (typeof this.modifier !== "undefined" && !(this.modifier === "#" || this.modifier === "b"))
+        {
+            throw new Error("Accidental not supported: " + this.modifier);
+        }
     }
 
     name_check(): void {
@@ -72,11 +83,11 @@ class NOTE extends STATEMENT {
 
     to_string(): string {
         if (this.token_length === 1)
-            return `${this.pitch}`;
+            return `${this.pitchClass}`;
         if (this.token_length === 2)
-            return `${this.pitch}${this.octave}`;
+            return `${this.pitchClass}${this.octave}`;
         if (this.token_length === 3)
-            return `${this.pitch}${this.modifier}${this.octave}`;
+            return `${this.pitchClass}${this.modifier}${this.octave}`;
     }
 
     get_xml(): string {
