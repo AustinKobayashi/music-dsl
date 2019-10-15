@@ -28,7 +28,7 @@
         "end crescendo", "begin decrescendo", "end decrescendo",
         "begin diminuendo", "end diminuendo"]
       </p>
-      <p>DURATION ::= ["whole", "half", "quarter", "eighth", "sixteenth", "thirty-second", "sixty-fourth", "hundred twenty-eighth"]</p>
+      <p>DURATION ::= "dotted-"? ["whole", "half", "quarter", "eighth", "16th", "32nd", "64th", "128th"]</p>
     </b-modal>
     <div id="top-bar">
       <button type="button" class="btn btn-primary" @click="show_example_modal">
