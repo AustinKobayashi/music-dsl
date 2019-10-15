@@ -30,7 +30,7 @@ class DURATION extends STATEMENT {
 
   evaluate(): void {
     if (!(this.type in this.durations)){
-      throw new Error('Invalid Duration:'+this.type)
+      throw new Error('Duration not supported: '+this.type)
     }
     if (this.type.indexOf('dotted-') < 0) {
       this.xml += '<type>' + this.type + '</type>\n';

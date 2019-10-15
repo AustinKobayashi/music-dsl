@@ -69,7 +69,7 @@ class KEY extends STATEMENT {
   support_check(): void {
     let key = `${this.note.to_string()} ${this.quality.to_string()}`;
     if (!(key in KEY_TO_FIFTHS))
-      throw new Error(`Invalid Key Signature: ${key}`);
+      throw new Error(`Key not supported: ${key}`);
   }
 
   get_xml(): string {
