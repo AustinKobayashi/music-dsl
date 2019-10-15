@@ -51,7 +51,8 @@ class SECTION extends STATEMENT {
       }
       else {
         tokenizer.get_next_token()
-        throw new Error('Invalid Section '+tokenizer.get_cur_token());
+        let first = tokenizer.get_cur_token().split(' ')[0]
+        throw new Error('Invalid Section: '+first);
       }
     }
 

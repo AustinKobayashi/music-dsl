@@ -33,7 +33,7 @@ class DYNAMIC extends STATEMENT {
 
       }
     } else {
-      throw new Error('Invalid dynamic');
+      throw new Error('Invalid Dynamic: '+this.dynamic);
     }
 
     this.xml += '</direction-type>\n';
