@@ -107,6 +107,10 @@ class CHORD extends STATEMENT {
     return this.duration.get_duration();
   }
 
+  get_duration_string(): string {
+    return this.duration.get_name();
+  }
+
   get_xml(): string {
     return this.xml;
   }

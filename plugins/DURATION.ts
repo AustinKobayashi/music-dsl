@@ -47,6 +47,10 @@ class DURATION extends STATEMENT {
     return this.durations[this.type];
   }
 
+  get_name(): string {
+    return this.type;
+  }
+
   get_xml(): string {
     return this.xml;
   }

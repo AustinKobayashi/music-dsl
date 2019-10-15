@@ -74,7 +74,7 @@ class SECTION extends STATEMENT {
         this.create_new_measure(measure_number++);
         measure_duration = 0;
       } else if (measure_duration > 128 * this.time.get_beats()) {
-        throw new Error('Invalid durations: Not enough beats in a bar');
+        throw new Error('Invalid durations - some note lengths too long for a bar: ' + this.chords[i-1].get_duration_string());
       }
 
       this.chords[i].evaluate();
@@ -85,7 +85,7 @@ class SECTION extends STATEMENT {
     }
 
     if (measure_duration !== 128 * this.time.get_beats())
-      throw new Error('Invalid durations: Too many beats in a bar');
+      throw new Error('Invalid durations - some note lengths too long for a bar: ' + this.chords[i-1].get_duration_string());
 
     this.xml += '</measure>\n';
     this.xml += '</part>\n';
