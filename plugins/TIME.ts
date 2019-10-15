@@ -22,7 +22,7 @@ class TIME extends STATEMENT {
 
   support_check(): void {
     if (this.beatType % 2 != 0)
-      throw new Error(`Beat Type ${this.beatType} is not even`);
+      throw new Error(`Beat Type not supported: ${this.beatType}`);
   }
 
   // called in SECTION to dynamically set measure duration 
