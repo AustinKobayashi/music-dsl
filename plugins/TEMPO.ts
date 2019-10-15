@@ -11,7 +11,6 @@ class TEMPO extends STATEMENT {
   parse(): void {
     tokenizer.get_and_check_next(TEMPO_TOKEN);
     this.tempoString = tokenizer.get_next_token();
-
   }
 
   evaluate(): void {
@@ -34,7 +33,7 @@ class TEMPO extends STATEMENT {
   duration_check(): void { }
 
   name_check(): void { }
-  
+
   support_check(): void { }
 
 }
