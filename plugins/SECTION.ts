@@ -50,7 +50,8 @@ class SECTION extends STATEMENT {
         this.chords.push(chord);
       }
       else {
-        throw new Error('Invalid Section');
+        tokenizer.get_next_token()
+        throw new Error('Invalid Section '+tokenizer.get_cur_token());
       }
     }
 
