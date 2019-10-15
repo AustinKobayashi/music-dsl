@@ -42,7 +42,7 @@ class CLEF extends STATEMENT {
 
   support_check(): void {
     if (SUPPORTED_CLEF.indexOf(this.clef) < 0)
-      throw new Error(`Clef ${this.clef} is not supported.`);
+      throw new Error(`Clef not supported: ${this.clef}`);
   }
 
   get_comparator(): number {

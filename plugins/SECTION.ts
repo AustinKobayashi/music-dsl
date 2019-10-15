@@ -51,7 +51,8 @@ class SECTION extends STATEMENT {
       }
       else {
         tokenizer.get_next_token()
-        throw new Error('Invalid Section '+tokenizer.get_cur_token());
+        let first = tokenizer.get_cur_token().split(' ')[0]
+        throw new Error('Section not supported: '+first);
       }
     }
 
@@ -73,7 +74,7 @@ class SECTION extends STATEMENT {
         this.create_new_measure(measure_number++);
         measure_duration = 0;
       } else if (measure_duration > 128 * this.time.get_beats()) {
-        throw new Error('Invalid durations');
+        throw new Error('Invalid durations: Not enough beats in a bar');
       }
 
       this.chords[i].evaluate();
@@ -84,7 +85,7 @@ class SECTION extends STATEMENT {
     }
 
     if (measure_duration !== 128 * this.time.get_beats())
-      throw new Error('Invalid durations');
+      throw new Error('Invalid durations: Too many beats in a bar');
 
     this.xml += '</measure>\n';
     this.xml += '</part>\n';

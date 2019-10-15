@@ -68,9 +68,8 @@ class KEY extends STATEMENT {
 
   support_check(): void {
     let key = `${this.note.to_string()} ${this.quality.to_string()}`;
-
-    if (KEY_TO_FIFTHS[key] === null)
-      throw new Error(`${key} is not supported or does not exists`);
+    if (!(key in KEY_TO_FIFTHS))
+      throw new Error(`Key not supported: ${key}`);
   }
 
   get_xml(): string {
