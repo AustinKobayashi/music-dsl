@@ -1,5 +1,8 @@
 <template>
   <div id="container">
+    <div>
+      <img id='banner' src='./music-dsl-banner.png'>
+    </div>
     <b-modal ref="example-modal" hide-footer title="Example" size="xl">
       <div id="modal-content">
         <img id="example-img" src="/example.png" />
@@ -92,5 +95,12 @@ p {
 
 #osmdCanvas {
     width: 70vw;
+}
+
+#banner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  display: block;
 }
 </style>
